@@ -2,7 +2,7 @@
   <v-col>
     <carousel-3d
       :perspective="0"
-      :space="400"
+      :space="410"
       :display="3"
       :autoplay="true"
       :controlsVisible="true"

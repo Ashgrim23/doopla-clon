@@ -11,8 +11,8 @@
       </v-col>
     </v-row>
     <v-row>
-        <v-col cols="6" >            
-            <v-img class="cardIcon" src="https://doopla-clone.s3.us-east-2.amazonaws.com/icon-cons.png"/>
+        <v-col cols="6" style="text-align:right" >            
+            <img class="cardIcon" src="https://doopla-clone.s3.us-east-2.amazonaws.com/icon-cons.png"/>
         </v-col>
         <v-col cols="6">
             <v-row no-gutters>
@@ -39,6 +39,7 @@ export default {
 .cardContent{
     background-color: white;
     height: 100%;
+    box-shadow:rgb(0, 0, 0) 0px 7px 31px -21px inset; 
 
 }
 

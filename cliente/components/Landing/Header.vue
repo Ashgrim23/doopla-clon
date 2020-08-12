@@ -109,7 +109,7 @@ export default {
 };
 </script>    
 
-<style >
+<style scoped>
 .rowMargin1,
 .rowMargin2 {
   height: 100px;
