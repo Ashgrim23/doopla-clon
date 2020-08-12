@@ -1,0 +1,71 @@
+html {
+    font-family: 'Nunito', "sans-serif";
+
+}
+
+.v-btn__content {
+    font-family: "sans-serif" !important;
+    color: rgb(255, 255, 255) !important;
+  }
+
+  .purpleBtn {
+    background-color: rgb(111, 94, 158) !important;
+    border-color: rgb(111, 94, 158) !important;
+  }
+  
+  .redBtn {
+    background-color: rgb(219, 54, 88) !important;
+    border-color: rgb(219, 54, 88) !important;
+  }
+  
+  .purpleBtn,
+  .redBtn {
+    width: 90%;
+    border-top-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+  }
+
+
+.formBtn {
+    background-color: rgb(219, 54, 88) !important;
+    border-color: rgb(219, 54, 88) !important;
+    padding: 0px !important;
+    width: 150px !important;
+    margin: 0px 0px 15px 0px !important;
+    font-size: 10px !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+  }
+  
+  .faqBtn {
+    border-top-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    background-color: rgb(64, 249, 155) !important;
+    border-color: rgb(64, 249, 155) !important;  
+    
+    width: 150px;
+    margin: 0px 0px 15px 0px !important;
+    font-size: 10px !important;
+  }
+  
+  .purpleBtn:hover,
+  .redBtn:hover {
+    opacity: 0.7;
+  }
+
+a{
+    color: white;
+}
+
+.dooplaTituloVioleta {
+  color: rgb(156, 0, 139);
+  font-size: 30px;
+  font-weight: 800;
+  
+}
+
+.tx-purp1 {
+  color:rgb(87,70,123);
+  text-align: center;
+}
+
