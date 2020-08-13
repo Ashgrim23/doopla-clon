@@ -1,6 +1,6 @@
 <template>
      <v-col cols="auto"  class="cardCol">
-        <h3 class="tx-purp1">{{titulo}}</h3>
+        <h3 class="tx-purp1" style="font-size:24px;font-weight:900;">{{titulo}}</h3>
         <img src="https://doopla-clone.s3.us-east-2.amazonaws.com/icon-solicitantes.png">
         <ul  v-for="(item,index) in items" :key="index" class="itemsList tx-purp1">
         <li class="listItem">{{item}}      </li>

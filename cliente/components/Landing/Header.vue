@@ -4,10 +4,10 @@
       <v-row no-gutters>
         <v-col md="4" cols="12" class="logoCol">
           <nuxt-link to="/">
-            <img class="img-logo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png"/>
+            <img class="img-logo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
           </nuxt-link>
-          
-          <SideNavToggle @toggle="displayNavMenuMobile = !displayNavMenuMobile"/>          
+
+          <SideNavToggle @toggle="displayNavMenuMobile = !displayNavMenuMobile"/>
         </v-col>
         <v-col md="8" cols="12">
           <NavMenu/>
@@ -18,42 +18,7 @@
       <v-row>
         <v-col sm="8" cols="12">
           <div class="forbes">
-            <div class="leyendaForbes">
-              <h1>
-                Doopla la primera Fintech, en su tipo, en entregar la solicitud de autorización para ser regulada.
-                <v-dialog v-model="dialog">
-                  <template v-slot:activator="{on,attrs}">
-                    <a v-bind="attrs" v-on="on" class="forbSizeColor nota">Ver más...</a>
-                  </template>
-
-                  <v-card>
-                    <v-card-title class="dialogTitle">
-                      <h1>¡Juntos lo hemos logrado!</h1>
-                    </v-card-title>
-
-                    <v-card-text>
-                      En Doopla.mx estamos muy contentos de informarte que somos la primera Fintech, en nuestro tipo, en haber entregado a la Comisión Nacional Bancaria y de Valores (CNBV) la solicitud de autorización formal para operar como Institución de Tecnología Financiera (ITF).
-                      <br>
-                      <br>Lo anterior es el fruto de un arduo trabajo en equipo, que comenzó a finales del año pasado, en donde contamos con la asesoría de especialistas corporativos y legales con amplia experiencia en el sector financiero, avanzamos en entregar la versión preliminar a finales de junio (mucho antes del plazo establecido por la autoridad) y en agosto recibimos comentarios de la CNBV, a partir de ese momento nos avocamos en trabajar en ellos (para entregar una solicitud sólida y robusta apegada a lo que marca la Ley) y nos propusimos, como meta interna, la entrega de la solicitud formal el miércoles 4 de septiembre para ser la primera Fintech, en nuestro tipo, en lograrlo y cumplimos con ello. Ahora lo que resta es esperar la respuesta de las autoridades financieras, que de acuerdo a la Ley tienen 180 días naturales para hacerlo.
-                      <br>
-                      <br>Este importante logro lo queremos compartir hoy contigo porque al estar a un paso de ser una empresa regulada nos traerá beneficios para ti, pues nos brinda certeza jurídica, nos institucionaliza en todos los procesos, lo que sin duda alguna se traduce en una mayor confianza para los usuarios como tú.
-                      <br>
-                      <br>
-                      <b style="color:#57467b">
-                        ¡Nuevamente mil gracias por tu apoyo y confianza!
-                        <br>Juan Carlos Flores
-                        <br>Co-fundador y Director General
-                        <br>Doopla.mx
-                      </b>
-                    </v-card-text>
-
-                    <v-card-actions class="dialogActions">
-                      <v-btn class="dialogConfirmBtn" text @click="dialog = false">OK</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </h1>
-            </div>
+            <LeyendaForbes/>
           </div>
         </v-col>
         <v-col cols="12" sm="2">
@@ -94,15 +59,18 @@
 import SideNavToggle from "@/components/Navigation/SideNavToggle";
 import NavMenu from "@/components/Navigation/NavMenu";
 import NavMenuMobile from "@/components/Navigation/NavMenuMobile";
+import DialogCard from "@/components/Landing/DialogCard";
+import LeyendaForbes from "@/components/Landing/LeyendaForbes"
 export default {
   components: {
     SideNavToggle,
     NavMenu,
-    NavMenuMobile
+    DialogCard,
+    NavMenuMobile,
+    LeyendaForbes
   },
   data() {
-    return {
-      dialog: false,
+    return {      
       displayNavMenuMobile: false
     };
   }
@@ -174,46 +142,6 @@ p {
   width: 230px;
   margin-bottom: 15px;
   border: 2px solid red;
-}
-
-.leyendaForbes {
-  margin: 12.194px 0 12.194px 10px;
-  color: rgb(255, 255, 255);
-  font-size: 9.1px;
-  font-weight: 500;
-}
-
-.forbSizeColor {
-  background-color: rgba(0, 0, 0, 0);
-  color: rgb(64, 249, 155);
-  font-size: 15px;
-
-  text-decoration: none;
-}
-
-.dialogTitle h1 {
-  color: rgb(87, 70, 123);
-}
-
-.dialogActions,
-.dialogTitle {
-  justify-content: center;
-}
-
-.nota {
-  float: right;
-}
-
-.dialogConfirmBtn {
-  background-color: rgb(64, 248, 155);
-  border-color: rgb(64, 248, 155);
-  width: 87px;
-  border-radius: 3px;
-}
-
-.dialogConfirmBtn:hover {
-  background-color: rgb(58, 223, 140);
-  border-color: rgb(58, 223, 140);
 }
 
 .faqBtn .v-btn__content {

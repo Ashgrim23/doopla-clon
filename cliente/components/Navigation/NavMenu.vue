@@ -6,19 +6,19 @@
         <nuxt-link to="/">INICIO</nuxt-link>
       </li>
       <li class="nav-item">
-        <a href="#sec-2">CONOCE DOOPLA</a>
+        <nuxt-link to="#sec-2">CONOCE DOOPLA</nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link to="#">CONOCE PRÉSTAMOS</nuxt-link>
+        <nuxt-link to="#sec-4">CONOCE PRÉSTAMOS</nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link to="#">MEDIOS</nuxt-link>
+        <nuxt-link to="#sec-5">MEDIOS</nuxt-link>
       </li>
       <li class="nav-item">
         <nuxt-link to="#">INGRESAR</nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link to="#">REGISTRO</nuxt-link>
+        <nuxt-link to="/registrate">REGISTRO</nuxt-link>
       </li>
     </ul>
   </v-row>

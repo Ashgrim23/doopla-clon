@@ -1,5 +1,5 @@
 <template>
-  <v-content class="cardContent">
+  <v-container class="cardContent">
     <v-row>
       <v-col>
         <p class="tx-purp1">{{prestamo.titulo}}</p>
@@ -21,7 +21,7 @@
             </v-row>
         </v-col>
     </v-row>
-  </v-content>
+  </v-container>
 </template>
 
 <script>
