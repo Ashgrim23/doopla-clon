@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  middleware:'logeado'
-}
-</script>
-
 <style>
 
 </style>

@@ -45,6 +45,7 @@ import Afiliados from "@/components/Landing/Afiliados/Afiliados";
 import LeyendaForbes from "@/components/Landing/LeyendaForbes";
 import Footer from "@/components/Landing/Footer/Footer";
 export default {
+    layout:"landingLayout",  
   components: {
     Header,
     ConoceDoopla,
