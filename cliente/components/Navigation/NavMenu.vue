@@ -15,7 +15,12 @@
         <nuxt-link to="#sec-5">MEDIOS</nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link to="#">INGRESAR</nuxt-link>
+        <v-dialog max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly" v-model="dialogLogin"  transition="slide-y-transition">
+          <template v-slot:activator="{on,attrs}">
+            <span style="color:white;" v-bind="attrs" v-on="on" >INGRESAR</span>
+          </template>
+          <DialogLogin @close="dialogLogin=false"/>
+        </v-dialog>
       </li>
       <li class="nav-item">
         <nuxt-link to="/registrate">REGISTRO</nuxt-link>
@@ -23,6 +28,20 @@
     </ul>
   </v-row>
 </template>
+
+<script>
+import DialogLogin from "@/components/Landing/DialogLogin"
+export default {
+  components:{
+    DialogLogin
+  },
+  data() {
+    return {
+      dialogLogin:false
+    }
+  }
+}
+</script>
 
 
 

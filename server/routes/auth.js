@@ -41,8 +41,11 @@ router.post('/login',async(req,res)=>{
                 let token=jwt.sign(usuario.toJSON(),process.env.SECRET,{
                     expiresIn:604800
                 })
+                let tmpusr = usuario.toObject();
+                delete tmpusr['password'];
                 res.json({
                     exito:true,
+                    usuario:tmpusr,
                     token:token,
                     mensaje:"login exitoso"
                 })

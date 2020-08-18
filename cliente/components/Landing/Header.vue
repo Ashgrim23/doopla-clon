@@ -6,7 +6,6 @@
           <nuxt-link to="/">
             <img class="img-logo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
           </nuxt-link>
-
           <SideNavToggle @toggle="displayNavMenuMobile = !displayNavMenuMobile"/>
         </v-col>
         <v-col md="8" cols="12">
@@ -44,7 +43,12 @@
             <br>
             <v-btn class="formBtn">ACTIVA TU CUENTA</v-btn>
             <br>
-            <v-btn class="formBtn">INICIA SESIÓN</v-btn>
+              <v-dialog max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly" v-model="dialogLogin"  transition="slide-y-transition">
+                <template v-slot:activator="{on,attrs}">
+                  <v-btn v-bind="attrs" v-on="on" class="formBtn">INICIA SESIÓN</v-btn>
+                </template>
+                <DialogLogin @close="dialogLogin=false"/>
+              </v-dialog>
             <br>
             <v-btn class="faqBtn">Preguntas frecuentes</v-btn>
           </form>
@@ -60,24 +64,29 @@ import SideNavToggle from "@/components/Navigation/SideNavToggle";
 import NavMenu from "@/components/Navigation/NavMenu";
 import NavMenuMobile from "@/components/Navigation/NavMenuMobile";
 import DialogCard from "@/components/Landing/DialogCard";
+import DialogLogin from "@/components/Landing/DialogLogin";
 import LeyendaForbes from "@/components/Landing/LeyendaForbes"
 export default {
   components: {
     SideNavToggle,
     NavMenu,
+    DialogLogin,
     DialogCard,
     NavMenuMobile,
     LeyendaForbes
   },
   data() {
     return {      
-      displayNavMenuMobile: false
+      displayNavMenuMobile: false,
+      dialogLogin:false
     };
   }
 };
 </script>    
 
 <style scoped>
+
+
 .rowMargin1,
 .rowMargin2 {
   height: 100px;

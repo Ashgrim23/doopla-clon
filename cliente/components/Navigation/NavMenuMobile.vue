@@ -19,7 +19,17 @@
               <nuxt-link to="#sec-5">MEDIOS</nuxt-link>
             </li>
             <li class="nav-item">
-              <nuxt-link to="#">INGRESAR</nuxt-link>
+              <v-dialog
+                max-width="500px"
+                :fullscreen="$vuetify.breakpoint.xsOnly"
+                v-model="dialogLogin"
+                transition="slide-y-transition"
+              >
+                <template v-slot:activator="{on,attrs}">
+                  <span style="color:white;" v-bind="attrs" v-on="on">INGRESAR</span>
+                </template>
+                <DialogLogin @close="dialogLogin=false"/>
+              </v-dialog>
             </li>
             <li class="nav-item">
               <nuxt-link to="/registrate">REGISTRO</nuxt-link>
@@ -37,6 +47,11 @@ export default {
     show: {
       type: Boolean,
       default: false
+    }
+  },
+  data(){
+    return {
+      dialogLogin:false
     }
   }
 };
@@ -80,18 +95,16 @@ export default {
 
 .slide-side-enter-active,
 .slide-side-leave-active {
-   transition: all 0.3s ease-out; 
-   
+  transition: all 0.3s ease-out;
 }
 .slide-side-enter,
 .slide-side-leave-to {
-   transform: translateX(100%);   
+  transform: translateX(100%);
 }
 
 @media (min-width: 768px) {
   .sidenav-container {
-  display: none;
+    display: none;
+  }
 }
-}
-
 </style>
