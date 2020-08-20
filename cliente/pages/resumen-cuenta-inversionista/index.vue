@@ -20,8 +20,7 @@ export default {
         getUsuario(){
             return this.$store.getters.getUsuario
         }
-    }
-    
+    }    
 }
 </script>
 

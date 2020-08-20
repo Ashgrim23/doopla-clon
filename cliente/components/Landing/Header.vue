@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import SideNavToggle from "@/components/Navigation/SideNavToggle";
-import NavMenu from "@/components/Navigation/NavMenu";
-import NavMenuMobile from "@/components/Navigation/NavMenuMobile";
+import SideNavToggle from "@/components/Landing/Navigation/SideNavToggle";
+import NavMenu from "@/components/Landing/Navigation/NavMenu";
+import NavMenuMobile from "@/components/Landing/Navigation/NavMenuMobile";
 import DialogCard from "@/components/Landing/DialogCard";
 import DialogLogin from "@/components/Landing/DialogLogin";
 import LeyendaForbes from "@/components/Landing/LeyendaForbes"

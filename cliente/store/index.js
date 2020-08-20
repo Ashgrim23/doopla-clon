@@ -18,25 +18,41 @@ export const mutations={
 }
 
 export const actions={
+    checkCookies(vuexContext,req){
+        let token;
+        let usuario;
+        let cookie;
+        process.client ? cookie=document.cookie : cookie=req.headers.cookie
+        if (!cookie) {
+            vuexContext.commit('clearToken')
+            delete this.$axios.defaults.headers.common['x-access-token']
+            return; 
+        }  
+        
+        token=cookie.split(";").find(c=>c.trim().startsWith('jwt=')).split('=')[1]
+        usuario=JSON.parse(unescape(cookie.split(";").find(c=>c.trim().startsWith('usuario=')).split('=')[1]))
+
+        if (token && usuario) {
+            vuexContext.commit('setToken',{ usuario:usuario, token:token})
+            this.$axios.defaults.headers.common['x-access-token']=token
+        } else {
+            vuexContext.commit('clearToken')
+            delete this.$axios.defaults.headers.common['x-access-token']
+        }
+
+    },
     deslogeaUsuario(vuexContext){
         vuexContext.commit("clearToken");
         Cookie.remove('jwt')
         Cookie.remove('usuario')
-        if (process.client) {
-            localStorage.removeItem('token')
-            localStorage.removeItem('usuario')
-        }
     },
-
     async logeaUsuario(vuexContext,data){
         try {
-            let respuesta=await this.$axios.$post("http://localhost:3001/api/login",data)            
-            if (respuesta.exito){
-                vuexContext.commit('setToken',{ usuario:respuesta.usuario, token:respuesta.token})
-                localStorage.setItem('token',respuesta.token)
-                localStorage.setItem('usuario',respuesta.usuario)
-                Cookie.set('jwt',respuesta.token)
-                Cookie.set('usuario',respuesta.usuario)
+            let respuesta=await this.$axios.$post("/api/login",data)            
+            if (respuesta.exito){                
+                Cookie.set('jwt',respuesta.token,{ expires: 1 })
+                Cookie.set('usuario',respuesta.usuario,{ expires: 1 })
+                vuexContext.dispatch("checkCookies",vuexContext.req)                
                 return respuesta;
             }
         } catch (error) {

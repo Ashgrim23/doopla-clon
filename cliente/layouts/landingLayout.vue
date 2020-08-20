@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  middleware:'visita'
+  middleware:['checkCookies', 'visita']
 }
 </script>
