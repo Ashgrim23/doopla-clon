@@ -1,15 +1,17 @@
 <template>
   <div>
-    <NavMenu/>
+    <DashNavMenu/>
+    
     <Nuxt />
   </div>
+  
 </template>
 
 <script>
-import NavMenu from '@/components/Dashboard/Navigation/NavMenu.vue'
+import DashNavMenu from '@/components/Dashboard/Navigation/DashNavMenu.vue'
 export default {
   components:{
-    NavMenu
+    DashNavMenu
   },
   middleware:["checkCookies",'logeado']
 }
