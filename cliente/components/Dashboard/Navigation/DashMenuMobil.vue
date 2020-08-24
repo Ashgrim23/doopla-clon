@@ -15,7 +15,8 @@
       </v-col>
       
       <v-col cols="1">
-      
+          <img alt="Inversiones" class="imgCart" src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
+          
       </v-col>     
     </v-row>
   </div>
@@ -35,6 +36,10 @@ export default {
 
 
 <style scoped>
+.imgCart{
+  width: 26px;
+}
+
 .navToggle {
   background-color: white;
   padding: 9px 10px;

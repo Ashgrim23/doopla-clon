@@ -24,10 +24,10 @@
             </nuxt-link>
           </li>
           <li class="nav-item">
-            <div class="opcion">
+            <nuxt-link class="opcion" to=# @click="onLogout">
               <span class="navText">Cerrar sesión</span>
               <v-icon class="navIcon" dense>mdi-exit-to-app</v-icon>
-            </div>
+            </nuxt-link>
           </li>
         </ul>
       </ul>
@@ -69,6 +69,11 @@ export default {
     };
   },
   methods: {
+    onLogout(){
+         this.$emit("close")
+            this.$store.dispatch("deslogeaUsuario")
+            this.$router.push("/")
+    },
     togglePopMenu(e) {
       e.stopPropagation();
       this.popMenu = !this.popMenu;

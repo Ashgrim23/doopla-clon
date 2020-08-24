@@ -75,3 +75,21 @@ a{
   text-align: center;
 }
 
+
+.DashPurpBg {
+  background-color: var("--moradoText");
+  color:white;
+  text-align: center;
+  font-weight: 900;
+  font-size: 18px;  
+  display:block;
+  border-radius: 2px;
+  padding: 3px 0;
+  margin-top: 8px;
+  
+}
+
+.DashCardBgm {
+  background-color: rgb(222,220,225); 
+  margin: 5px 5px;
+}
