@@ -63,6 +63,11 @@ a{
     color: white;
 }
 
+.montosRend {
+  max-width: 170px;
+  margin: 5px auto;
+}
+
 .dooplaTituloVioleta {
   color: var("--violetaDoopla");
   font-size: 30px;
@@ -75,6 +80,12 @@ a{
   text-align: center;
 }
 
+.DashPurpBgm {
+  background-color: rgb(87, 70, 123);
+  color: white;
+
+  font-size: 15px;
+}
 
 .DashPurpBg {
   background-color: var("--moradoText");
@@ -89,7 +100,17 @@ a{
   
 }
 
+i.v-icon.helpIcon   {
+  position:absolute;
+  right:5px;
+  top:4px;
+  color: var("--verdeDoopla");
+}
+
 .DashCardBgm {
   background-color: rgb(222,220,225); 
-  margin: 5px 5px;
+  padding:15px 0;
+  margin: 0 5px ;
+  margin-bottom: 10px;
+  
 }
