@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters style="padding:15px 0;">
+  <v-row no-gutters style="padding-top:0px;padding-bottom:2px;">
     <v-col cols="0" md="1">
       <img class="imgLogo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
     </v-col>

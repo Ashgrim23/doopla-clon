@@ -1,15 +1,15 @@
 <template>
-  <v-row style="justify-content:center;padding: 0px  33px;">
-    <v-col cols="12" sm="6" style="padding:0;">
-      <div class="DashCardBgm" style="background-color:rgb(87,70,123);text-align:center;margin-bottom:0">
+  <v-row >
+    <v-col  style="padding:0 3px;" cols="12" sm="6" >
+      <div class="DashCardBgm" style="background-color:rgb(87,70,123);text-align:center;">
         <p style="color:white;font-size:15px;">Comunícate con nosotros:</p>
         <v-icon dense>mdi-phone-ring</v-icon>
         <v-icon dense>mdi-email</v-icon>
         <v-icon dense>mdi-chart-areaspline</v-icon>
       </div>
     </v-col>
-    <v-col cols="12" sm="6" style="padding:0;">
-      <div class="DashCardBgm" style="background-color:rgb(87,70,123);text-align:center;margin-bottom:0">
+    <v-col  style="padding:0 3px; " cols="12" sm="6">
+      <div class="DashCardBgm" style="background-color:rgb(87,70,123);text-align:center;">
         <p style="color:white;font-size:15px;">Redes sociales:</p>
         <v-icon dense>mdi-youtube</v-icon>
         <v-icon dense>mdi-facebook</v-icon>

@@ -32,7 +32,7 @@
         </ul>
       </ul>
     </v-row>
-    <v-row no-gutters>
+    <v-row no-gutters style="padding-top:2px;">
       <v-spacer></v-spacer>
       <ul class="navMenu">
         <li class="navMenu-item">
