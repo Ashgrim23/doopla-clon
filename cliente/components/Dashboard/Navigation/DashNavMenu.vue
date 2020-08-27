@@ -1,8 +1,7 @@
 <template>
-  <v-container fluid>
-      
-      <DashMenuLargo v-if="this.$vuetify.breakpoint.mdAndUp" />
-      <DashMenuMobil v-else/>
+  <v-container fluid>     
+      <DashMenuLargo v-if="this.isMounted && this.$vuetify.breakpoint.mdAndUp" />
+      <DashMenuMobil v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" />
     
   </v-container>
 </template>
@@ -14,6 +13,14 @@ export default {
   components: {
     DashMenuLargo,
     DashMenuMobil
+  },
+  data(){
+    return {
+      isMounted:false
+    }
+  },
+  mounted(){
+    this.isMounted=true
   }
 };
 </script>

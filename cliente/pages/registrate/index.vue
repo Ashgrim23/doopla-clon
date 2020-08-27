@@ -18,7 +18,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col>
-        <v-row style="justify-content:center;padding:0 40px;">
+        <v-row  style="justify-content:center;padding:0 40px;">
           <v-col cols="12" md="4">
             <v-form class="regForm">
                <input
@@ -54,7 +54,7 @@
                 required
               >
 
-              <v-checkbox value="false" type="checkbox" name="legal" id="checkbox1">
+              <v-checkbox value="false" type="checkbox" name="legal" id="checkbox1" >
                 <template v-slot:label>
                   <div>
                     <p class="tx-purp1" style="font-size:12px;text-align:justify">
@@ -90,12 +90,24 @@ export default {
       
     }
   },
+  computed:{
+
+  },
   methods:{
     async onSubmit(){
       try {
+        if (!this.data.nombre.length>0) {
+          console.log("error")
+          return 
+        }
         let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)
+        
         if (respuesta.exito) {
           let res =await this.$store.dispatch("logeaUsuario",this.data)
+          if (res.exito) {
+            this.$router.push('/resumen-cuenta-inversionista')
+          }
+          
         }
         
       } catch (error) {

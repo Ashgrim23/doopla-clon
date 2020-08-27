@@ -40,6 +40,14 @@
                   <div class="indiceMedia"></div>
                   <div class="indiceAlta"></div>
                 </div>
+                
+                <ul class="contBarraLabels">
+                  <li><span class="barraLabel tx-purp1">Nada</span></li>
+                  <li><span class="barraLabel tx-purp1">Baja</span></li>
+                  <li><span class="barraLabel tx-purp1">Media</span></li>
+                  <li><span class="barraLabel tx-purp1 barraLabelActivo">Alta</span></li>
+                </ul>
+                
             </div>
             <nuxt-link class="greenBtn" style="margin-top:5px;" to="#">INVITAR</nuxt-link>
         </div>
@@ -57,6 +65,26 @@
   text-align: center;
 }
 
+.contBarraLabels {
+  display: flex;
+  width: 294px;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.barraLabel{  
+  width: 65px; 
+  display: inline-block;
+  font-size: 10px;
+  border-radius: 10px;
+  background-color: rgba(87,70,123,0.05);
+  
+}
+
+.barraLabelActivo {
+  background-color: white;
+}
+
 .indiceNada,.indiceBaja,
 .indiceMedia,.indiceAlta {
   width: 72.5px;
@@ -68,6 +96,8 @@
 
 .indiceNada {
   background-color: rgb(255,82,82);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 .indiceBaja {
   background-color: rgb(249,176,88);
@@ -77,6 +107,8 @@
 }
 .indiceAlta {
   background-color: rgb(100,255,104);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 

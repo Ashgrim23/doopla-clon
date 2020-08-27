@@ -25,6 +25,7 @@ router.post('/registro',async(req,res)=>{
                 mensaje:"nuevo usuario creado exitosamente"
             })            
         } catch (error) {
+            
             res.status(500).json({
                 exito:false,
                 mensaje:error.message

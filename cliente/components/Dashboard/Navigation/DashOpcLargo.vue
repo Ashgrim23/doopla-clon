@@ -23,8 +23,8 @@
               <v-icon class="navIcon" dense>mdi-cog</v-icon>
             </nuxt-link>
           </li>
-          <li class="nav-item">
-            <nuxt-link class="opcion" to=# @click="onLogout">
+          <li class="nav-item" @click="onLogout">
+            <nuxt-link class="opcion" to=# >
               <span class="navText">Cerrar sesión</span>
               <v-icon class="navIcon" dense>mdi-exit-to-app</v-icon>
             </nuxt-link>
@@ -69,10 +69,10 @@ export default {
     };
   },
   methods: {
-    onLogout(){
-         this.$emit("close")
-            this.$store.dispatch("deslogeaUsuario")
-            this.$router.push("/")
+    onLogout(){         
+        console.log("click")
+         this.$store.dispatch("deslogeaUsuario")
+         this.$router.push("/")
     },
     togglePopMenu(e) {
       e.stopPropagation();
@@ -134,7 +134,7 @@ export default {
   display: none;
   position: absolute;
   list-style: none;
-
+  z-index:1000;
   background-color: rgba(232, 232, 232, 0.8);
   padding: 0;
   margin: 0;
