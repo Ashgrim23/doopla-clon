@@ -25,8 +25,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 const usrRoutes = require('./routes/auth')
+const depoRoutes=require('./routes/depositos')
 
 app.use('/api',usrRoutes)
+app.use('/api',depoRoutes)
 
 app.listen(3001,(err)=>{
     if (err){

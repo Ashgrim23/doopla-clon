@@ -1,6 +1,5 @@
 const router=require('express').Router()
 const User=require('../models/user')
-const verifyToken=require('../middlewares/verify-token')
 const jwt =require('jsonwebtoken')
 
 router.post('/registro',async(req,res)=>{

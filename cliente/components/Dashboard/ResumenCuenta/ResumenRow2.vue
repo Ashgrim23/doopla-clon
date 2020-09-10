@@ -20,17 +20,17 @@
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Efectivo:</td>
-              <td style="text-align:right;">$99,999,319.64</td>
+              <td style="text-align:right;">${{getEfectivo}}</td>
             </tr>
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Préstamos en proceso de fondeo:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.prestamosFondeo}}</td>
             </tr>
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Préstamos activos:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.prestamosActivos}}</td>
             </tr>
           </tbody>
           <tfoot class="DashPurpBgm">
@@ -39,7 +39,7 @@
                 <strong>Valor de tu Cuenta:</strong>
               </td>
               <td style="text-align:right;">
-                <strong>$85,728.40</strong>
+                <strong>${{getValorCnt}}</strong>
               </td>
             </tr>
           </tfoot>
@@ -66,37 +66,37 @@
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Depositos:</td>
-              <td style="text-align:right;">$999,999,319.64</td>
+              <td style="text-align:right;">${{getCuenta.depositos}}</td>
             </tr>
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Pagos acreditados:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.pagosAcreditados}}</td>
             </tr>
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Recompensas Doopla:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.recompensasDoopla}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">Inversiones netas:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.InversionesNetas}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">En proceso:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.enProceso}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">En tu canasta:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.enCanasta}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">Retiros:</td>
-              <td style="text-align:right;">$0.0</td>
+              <td style="text-align:right;">${{getCuenta.retiros}}</td>
             </tr>
           </tbody>
           <tfoot class="DashPurpBgm">
@@ -105,7 +105,7 @@
                 <strong>Efectivo disponible:</strong>
               </td>
               <td style="text-align:right;">
-                <strong>$85,728.40</strong>
+                <strong>${{getEfectivo}}</strong>
               </td>
             </tr>
           </tfoot>
@@ -115,6 +115,23 @@
     </v-col>
   </v-row>
 </template>
+
+<script>
+export default {
+  computed: {
+    getCuenta() {
+      return this.$store.getters.getCuenta;
+    },
+    getEfectivo(){
+     return this.$store.getters.getEfectivo;
+    },
+    getValorCnt(){
+      return this.$store.getters.getValorCnt;
+    } 
+  }
+}
+</script>
+
 
 <style scoped>
 table {

@@ -2,11 +2,28 @@ import Cookie from 'js-cookie'
 
 export const state=()=>({
     prestamos:[],
+    cuenta: {
+        rendimiento:0,
+        intGenerados:0,
+        depositos:0,
+        pagosAcreditados:0,
+        recompensasDoopla:0,
+        InversionesNetas:0,
+        enProceso:0,
+        enCanasta:0,
+        retiros:0,
+        prestamosActivos:0,
+        prestamosFondeo:0
+    },
     usuario:null,
     token:null
 })
 
 export const mutations={
+    setCuenta(state,data){
+        if (data.depositos) state.cuenta=data.depositos;
+
+    },
     setToken(state,data) {
         state.token=data.token
         state.usuario=data.usuario
@@ -18,6 +35,13 @@ export const mutations={
 }
 
 export const actions={
+    async loadCuenta(vuexContext){
+        let getDepositos=this.$axios.$get("/api/depositos")
+        const [depositosResp] =await Promise.all([
+            getDepositos
+        ])
+        vuexContext.commit('setCuenta')
+    },
     checkCookies(vuexContext,req){
         let token;
         let usuario;
@@ -67,5 +91,15 @@ export const getters={
     },
     getUsuario(state){
         return state.usuario;
+    },
+    getCuenta(state) {
+        return state.cuenta;
+    },
+    getEfectivo(state){
+        return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso+state.cuenta.enCanasta+state.cuenta.retiros                    
+    },
+    getValorCnt(state){
+        return state.cuenta.prestamosFondeo+state.cuenta.prestamosActivos + state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso+state.cuenta.enCanasta+state.cuenta.retiros                    
     }
+
 }
