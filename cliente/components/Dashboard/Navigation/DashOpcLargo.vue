@@ -36,7 +36,9 @@
       <v-spacer></v-spacer>
       <ul class="navMenu">
         <li class="navMenu-item">
-          <span>RESUMEN</span>
+          <nuxt-link to="/resumen-cuenta-inversionista">
+            <span>RESUMEN</span>
+          </nuxt-link>
         </li>
         <li class="navMenu-item">
           <span>MIS INVERSIONES</span>
@@ -45,7 +47,9 @@
           <span>MOVIMIENTOS</span>
         </li>
         <li class="navMenu-item">
-          <span>INVIERTE AHORA</span>
+          <nuxt-link to="/solicitantes-cuenta-inversionista">
+            <span>INVIERTE AHORA</span>
+          </nuxt-link>
         </li>
         <li class="navMenu-item">
           <span>TRANSFIERE FONDOS</span>
@@ -97,6 +101,10 @@ export default {
 </script>
 
 <style scoped>
+
+ .navMenu-item a{
+  text-decoration: none;  
+}
 
 .navMenu {
   display: flex;

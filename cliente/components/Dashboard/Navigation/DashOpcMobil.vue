@@ -14,10 +14,10 @@
                         </span>                      
                     </li>
                     <br>
-                    <li class="itemNorm"><nuxt-link to="#" >RESUMEN</nuxt-link></li>
+                    <li class="itemNorm"><nuxt-link to="/resumen-cuenta-inversionista" >RESUMEN</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#" >MIS INVERSIONES</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#" >MOVIMIENTOS</nuxt-link></li>
-                    <li class="itemNorm"><nuxt-link to="#" >INVIERTE AHORA</nuxt-link></li>
+                    <li class="itemNorm"><nuxt-link to="/solicitantes-cuenta-inversionista" >INVIERTE AHORA</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#" >TRANSFIERE FONDOS</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#"  >SOLICITAR PRESTSAMO</nuxt-link></li>                
                     <v-separator></v-separator>

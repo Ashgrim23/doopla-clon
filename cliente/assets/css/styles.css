@@ -82,6 +82,11 @@ a{
   text-align: center;
 }
 
+.dooplaTitle {
+  font-size:1.8rem;
+  font-weight:900;
+}
+
 .DashPurpBgm {
   background-color: rgb(87, 70, 123);
   color: white;
@@ -126,4 +131,11 @@ i.v-icon.helpIcon   {
   font-weight: 900;
   width: 150px;
   border-radius: 10px;
+}
+
+
+.bar-notice{
+  text-align: center;
+  background-image: linear-gradient(to right, rgb(98, 74, 155) 0%, rgb(205, 50, 83) 51%, rgb(99, 74, 154) 100%);
+  padding: 5px;
 }

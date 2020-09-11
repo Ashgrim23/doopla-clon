@@ -6,7 +6,7 @@ const moment=require("moment")
 
 router.get('/Totdepositos',verifyToken,async(req,res)=>{
     try {
-        console.log(req.decoded._id)
+        
         let depositos=await Deposito.aggregate([
             
             { $match:{usuario: new mongoose.Types.ObjectId(req.decoded._id)}},
@@ -16,10 +16,10 @@ router.get('/Totdepositos',verifyToken,async(req,res)=>{
                             }
                     }
             }
-        ])
+        ])        
         
-        console.log(depositos)
-        let totdepo=0
+        let totdepo
+        depositos ? totdepo=depositos[0].total : totdepo=0;        
         
         res.json({
             exito:true,

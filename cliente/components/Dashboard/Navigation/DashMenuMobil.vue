@@ -10,13 +10,11 @@
         <br>
         <DashOpcMobil :show="show" @close="show=!show"/>
       </v-col>
-      <v-col cols="10" style="text-align: center;">
+      <v-col cols="9" style="text-align: center;">
         <img class="imgLogo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
-      </v-col>
-      
-      <v-col cols="1">
-          <img alt="Inversiones" class="imgCart" src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
-          
+      </v-col>      
+      <v-col cols="2">
+          <img alt="Inversiones" class="imgCart" src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">          
       </v-col>     
     </v-row>
   </div>
@@ -37,7 +35,8 @@ export default {
 
 <style scoped>
 .imgCart{
-  width: 26px;
+  width: 26px;  
+  
 }
 
 .navToggle {

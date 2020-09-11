@@ -20,8 +20,23 @@ export const state=()=>({
 })
 
 export const mutations={
-    setCuenta(state,data){
-        if (data.depositos) state.cuenta=data.depositos;
+    clearState(state){
+        state.cuenta= {
+            rendimiento:0,
+            intGenerados:0,
+            depositos:0,
+            pagosAcreditados:0,
+            recompensasDoopla:0,
+            InversionesNetas:0,
+            enProceso:0,
+            enCanasta:0,
+            retiros:0,
+            prestamosActivos:0,
+            prestamosFondeo:0
+        }
+    },
+    setCuenta(state,data){        
+        if (data.depositos) state.cuenta.depositos=data.depositos;
 
     },
     setToken(state,data) {
@@ -35,12 +50,22 @@ export const mutations={
 }
 
 export const actions={
+    async nuxtServerInit(vuexContext,context){        
+        vuexContext.dispatch("checkCookies",context.req)        
+        if (vuexContext.state.token) await vuexContext.dispatch('loadCuenta')        
+        
+    },
     async loadCuenta(vuexContext){
-        let getDepositos=this.$axios.$get("/api/depositos")
+        let getDepositos=this.$axios.$get("/api/Totdepositos")
         const [depositosResp] =await Promise.all([
             getDepositos
         ])
-        vuexContext.commit('setCuenta')
+        let data={};
+        if (depositosResp.exito) 
+            data.depositos=depositosResp.totDepositos;
+        
+        vuexContext.commit('setCuenta',data)
+        
     },
     checkCookies(vuexContext,req){
         let token;
@@ -69,6 +94,7 @@ export const actions={
         vuexContext.commit("clearToken");
         Cookie.remove('jwt')
         Cookie.remove('usuario')
+        vuexContext.commit("clearState");
     },
     async logeaUsuario(vuexContext,data){
         try {
@@ -76,7 +102,8 @@ export const actions={
             if (respuesta.exito){                
                 Cookie.set('jwt',respuesta.token,{ expires: 1 })
                 Cookie.set('usuario',respuesta.usuario,{ expires: 1 })
-                vuexContext.dispatch("checkCookies",vuexContext.req)                
+                vuexContext.dispatch("checkCookies",vuexContext.req)  
+                vuexContext.dispatch('loadCuenta')               
                 return respuesta;
             }
         } catch (error) {

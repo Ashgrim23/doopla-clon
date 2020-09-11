@@ -2,7 +2,7 @@
   <v-main data-app>
     <v-container>
       <v-row style="justify-content:center">
-        <p class="tx-purp1" style="font-size:1.8rem;font-weight:900;">RESUMEN</p>
+        <p class="tx-purp1 dooplaTitle" >RESUMEN</p>
       </v-row>
       <ResumenCuenta/>      
     </v-container>
