@@ -106,6 +106,10 @@ export default {
   text-decoration: none;  
 }
 
+.navMenu-item a:hover{
+  color:rgb(64, 249, 155);
+}
+
 .navMenu {
   display: flex;
   list-style: none;

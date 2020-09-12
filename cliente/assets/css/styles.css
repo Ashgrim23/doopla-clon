@@ -9,6 +9,8 @@
 
 }
 
+
+
 .v-btn__content {
     font-family: "sans-serif" !important;
     color: rgb(255, 255, 255) !important;
@@ -121,8 +123,21 @@ i.v-icon.helpIcon   {
 }
 
 .greenBtn {
-  background-color: rgb(64, 249, 155);
+  background-color: var("--verdeDoopla");
   color: rgb(52, 78, 90);
+  display: inline-block;
+  padding: 3px 25px;
+  text-decoration-line: none;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 900;
+  width: 150px;
+  border-radius: 10px;
+}
+
+.purpleBtn {
+  background-color: var("--moradoText");
+  color: white;
   display: inline-block;
   padding: 3px 25px;
   text-decoration-line: none;

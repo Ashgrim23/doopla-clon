@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie'
 
 export const state=()=>({
-    prestamos:[],
+    solicitudes:[],
     cuenta: {
         rendimiento:0,
         intGenerados:0,
@@ -113,6 +113,9 @@ export const actions={
 }
 
 export const getters={
+    getSolicitudes(state){
+        return state.solicitudes
+    },
     logeado(state){
         return state.token!=null
     },
