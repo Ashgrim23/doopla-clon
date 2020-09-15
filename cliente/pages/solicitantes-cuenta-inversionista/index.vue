@@ -25,11 +25,10 @@
           >mdi-view-grid-outline</v-icon>
         </div>
       </v-row>
-      <v-row class="solicitudesRow">
-          <SolicitudGrid v-if="this.getSolicitudes.length==0"/>          
-          <SolicitudGrid v-if="this.getSolicitudes.length==0"/>          
-          <SolicitudGrid v-if="this.getSolicitudes.length==0"/>          
-          <SolicitudGrid v-if="this.getSolicitudes.length==0"/>          
+      <v-row class="solicitudesRow">        
+          <template v-if="solicitudes">
+            <SolicitudGrid v-for="(solicitud,key) in solicitudes" :key="key" :solicitud="solicitud"/>                        
+          </template>
           <div v-else style="padding:3% 15%">
               <p class="tx-purp1" style="font-size:20px;">
                 En estos momentos nuestro equipo de crédito está trabajando en la aprobación de más solicitantes, 
@@ -44,6 +43,20 @@
 <script>
 import SolicitudGrid from '@/components/Dashboard/Solicitantes/SolicitudGrid'
 export default {
+  async asyncData({$axios}){
+    try {
+      const response =await $axios.get('api/solicitudes')
+      let solicitudes=[]
+      if (response.data.exito) solicitudes=response.data.solicitudes
+      
+      return {
+        solicitudes:solicitudes
+      };     
+    } catch (e) {
+      console.log(e)
+    }
+
+  },
   components:{
     SolicitudGrid
   },
@@ -60,10 +73,8 @@ export default {
   computed: {
     getEfectivo() {
       return this.$store.getters.getEfectivo;
-    },
-    getSolicitudes() {
-      return this.$store.getters.getSolicitudes;
     }
+    
   }
 };
 </script>

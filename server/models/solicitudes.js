@@ -1,5 +1,5 @@
-const mongoose = required('mongoose')
-const Schema = moongose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const SolicitudSchema = new Schema({
     solicitante: {type:String,required:true },
@@ -9,6 +9,7 @@ const SolicitudSchema = new Schema({
     tasaInteres:{type:Number,required:true},
     scoreBuro:{type:Number,required:true},
     monto:{type:Number,required:true},
+    fondeado:{type:Boolean,required:true,default:false},
     inversionistas:[{type:Schema.Types.ObjectId,ref:'Inversion'}]
 })
 

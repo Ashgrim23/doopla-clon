@@ -4,6 +4,19 @@
   --moradoText:rgb(87,70,123);
   --rojoDoopla: rgb(219, 54, 88);
   --violetaDoopla: rgb(156, 0, 139);
+  --A1Color:rgb(0,255,0);
+  --A2Color:rgb(0,210,0);
+  --A3Color:rgb(0,180,0);
+  --A4Color:rgb(0,150,0);
+  --B1Color: rgb(141, 216, 55);
+  --B2Color: rgb(115, 192, 27);
+  --B3Color: rgb(93, 163, 12);
+  --B4Color: rgb(71, 124, 10);
+  --C1Color:rgb(216, 216, 1);
+  --C2Color:rgb(194, 194, 0);
+  --C3Color:rgb(155, 155, 0);
+  --C4Color:rgb(119, 119, 0);
+  
 }html {
     font-family: 'Nunito', "sans-serif";
 
@@ -58,6 +71,7 @@
     font-size: 10px !important;
   }
   
+  .greenBtn:hover,
   .purpleBtn:hover,
   .redBtn:hover {
     opacity: 0.7;
