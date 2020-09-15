@@ -1,6 +1,8 @@
 import Cookie from 'js-cookie'
 
 export const state=()=>({
+    cart:[],
+    cartLenght:0,
     cuenta: {
         rendimiento:0,
         intGenerados:0,
@@ -19,6 +21,16 @@ export const state=()=>({
 })
 
 export const mutations={
+    
+    pushToCart(state,inversion){
+        state.cart.push(inversion)
+    },
+    incrementaMonto(state,datos){
+        let indexOfInv=state.cart.indexOf(datos.inversion)
+        console.log(indexOfInv)
+        datos.inversion.monto+=datos.montoAdicional
+        state.cart.splice(indexOfInv,1,datos.inversion)
+    },
     clearState(state){
         state.cuenta= {
             rendimiento:0,
@@ -49,6 +61,15 @@ export const mutations={
 }
 
 export const actions={
+    addInversionToCart(vuexContext,datos){
+        
+        const cartInversion=vuexContext.state.cart.find(inversion => inversion.solicitud===datos.solicitud )
+        if (!cartInversion) {
+            vuexContext.commit("pushToCart",datos)
+        } else {
+            vuexContext.commit("incrementaMonto",{inversion:datos,montoAdicional:datos.monto})   
+        }    
+    },
     async nuxtServerInit(vuexContext,context){        
         vuexContext.dispatch("checkCookies",context.req)        
         if (vuexContext.state.token) await vuexContext.dispatch('loadCuenta')        

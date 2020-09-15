@@ -1,5 +1,6 @@
 <template>    
-    <v-col cols="12" sm="6" md="4"  style="padding:6px;"  >        
+    <v-col cols="12" sm="6" md="4"  style="padding:6px;"  >   
+        
         <div class="solCardGrid">
             <v-row no-gutters>
                 <v-col cols="5" class="solCardCol1" >
@@ -21,7 +22,7 @@
                                 
                                 <svg height="20" width="20" viewBox="0 0 20 20">
                                     <circle cx="10" cy="10" r="10" fill="white" />    
-                                    <circle cx="10" cy="10" r="5" fill="transparent"
+                                    <circle class="pay" cx="10" cy="10" r="5" fill="transparent"
                                             stroke="rgb(64, 249, 155)"         
                                             stroke-width="10"               
                                             transform="rotate(-90) translate(-20)"                          
@@ -48,8 +49,9 @@
                          <v-dialog max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">                        
                                 <v-btn class="purpleBtn invierteBtn"    v-bind="attrs" v-on="on">invertir</v-btn>
-                            </template>
-                            <DialogInvierte @close="dlgInverte=false"/>
+                            </template>                            
+                            <DialogInvierte v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false"/>
+                            <DialogInvierteError v-else @close="dlgInverte=false"/>
                         </v-dialog>
                     </div>
                 </v-col>
@@ -60,20 +62,25 @@
 
 <script>
 import DialogInvierte from '@/components/Dashboard/Solicitantes/DialogInvierte.vue'
+import DialogInvierteError from '@/components/Dashboard/Solicitantes/DialogInvierteError.vue'
 export default {
     componets:{
-        DialogInvierte
+        DialogInvierte,
+        DialogInvierteError
     },
     props:{
         solicitud:{type:Object,required: true}
     },    
     data() {
         return {            
-            percent:35,
+            percent:75,
             dlgInverte:false
         }
     },
     computed:{
+        getEfectivo(){
+            return this.$store.getters.getEfectivo
+        },
         circunferencia(){
             let c= this.percent * 31.4 / 100
             return c+" 31.4"
@@ -99,6 +106,17 @@ export default {
 
 
 <style scoped>
+.pay {
+    
+  animation: circle-chart-fill 1.5s reverse; /* 1 */ 
+  transform: rotate(-90deg); /* 2, 3 */
+  transform-origin: center;
+}
+
+@keyframes circle-chart-fill {
+  to { stroke-dasharray: 0 100; }
+}
+
 .invierteBtn {
     border-radius: 0 !important;
     padding: 0px 0px !important;
@@ -120,6 +138,7 @@ svg {
     font-size: 10px;
 }
 .grafRow{
+    
    margin-top: 3px;
    padding: 5px 3px;   
    border-radius: 3px;

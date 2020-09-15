@@ -27,10 +27,12 @@ app.use(bodyParser.urlencoded({extended:true}))
 const usrRoutes = require('./routes/auth')
 const depoRoutes=require('./routes/depositos')
 const solRoutes =require('./routes/solicitudes')
+const invRouters = require('./routes/inversiones')
 
 app.use('/api',usrRoutes)
 app.use('/api',depoRoutes)
 app.use('/api',solRoutes)
+app.use('/api',invRouters)
 
 app.listen(3001,(err)=>{
     if (err){

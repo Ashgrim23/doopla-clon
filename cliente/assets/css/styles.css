@@ -22,7 +22,10 @@
 
 }
 
-
+.invBtn .v-btn__content {
+  font-family: "sans-serif" !important;
+  color: rgb(87,70,123) !important;
+}
 
 .v-btn__content {
     font-family: "sans-serif" !important;
