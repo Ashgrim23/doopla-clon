@@ -21,7 +21,13 @@ export const state=()=>({
 })
 
 export const mutations={
-    
+    incEnCanasta(state){
+        let monto=0
+        state.cart.forEach(inversion => {
+            monto+=inversion.monto
+        });        
+        state.cuenta.enCanasta=monto;
+    }, 
     pushToCart(state,inversion){
         state.cart.push(inversion)
     },
@@ -61,14 +67,15 @@ export const mutations={
 }
 
 export const actions={
-    addInversionToCart(vuexContext,datos){
-        
+    addInversionToCart(vuexContext,datos){        
         const cartInversion=vuexContext.state.cart.find(inversion => inversion.solicitud===datos.solicitud )
         if (!cartInversion) {
             vuexContext.commit("pushToCart",datos)
         } else {
-            vuexContext.commit("incrementaMonto",{inversion:datos,montoAdicional:datos.monto})   
+            vuexContext.commit("incrementaMonto",{inversion:cartInversion,montoAdicional:datos.monto})   
         }    
+        vuexContext.commit("incEnCanasta");
+
     },
     async nuxtServerInit(vuexContext,context){        
         vuexContext.dispatch("checkCookies",context.req)        
@@ -133,7 +140,9 @@ export const actions={
 }
 
 export const getters={
-    
+    getCart(state) {
+        return state.cart;
+    },    
     logeado(state){
         return state.token!=null
     },
@@ -144,10 +153,10 @@ export const getters={
         return state.cuenta;
     },
     getEfectivo(state){
-        return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso+state.cuenta.enCanasta+state.cuenta.retiros                    
+        return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros                    
     },
     getValorCnt(state){
-        return state.cuenta.prestamosFondeo+state.cuenta.prestamosActivos + state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso+state.cuenta.enCanasta+state.cuenta.retiros                    
+        return state.cuenta.prestamosFondeo+state.cuenta.prestamosActivos + state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso-state.cuenta.enCanasta+state.cuenta.retiros                    
     }
 
 }

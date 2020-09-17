@@ -6,7 +6,7 @@
         </v-card-title>
         <v-card-text style="text-align:center;" >
             <h3>Indica la cantidad que deseas invertir en esta solicitud</h3>
-        <select class="select">
+        <select class="select" v-model="monto">
             <option v-for="(monto,key) in  montosInv" :value="monto" :key="key">${{monto}}</option>
         </select>
         </v-card-text>
@@ -22,14 +22,19 @@
 
 <script>
 export default {
-    
+    data() {
+        return {
+            monto:250
+        }
+    },
     methods:{
         onInvertir(){
             const inversion={
                solicitud:this.solicitud._id,
-               monto:1
+               monto:this.monto
             }
             this.$store.dispatch('addInversionToCart',inversion)
+            this.$emit("invertido")
         }
     },
     props:{
@@ -38,7 +43,7 @@ export default {
     },
     computed:{
         montosInv(){
-            let montosInv=[]
+            let montosInv=[]            
             for (let x=250;x<=this.efectivo;x+=250) {
                 montosInv.push(x)
             }

@@ -58,7 +58,9 @@
           <span>SOLICITAR PRÉSTAMO</span>
         </li>
         <li class="navMenu-cart">
-          <img src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
+          <v-badge :value="getCartlen>0" :content="getCartlen" overlap left bottom  color="rgb(255,0,0)" style="z-index:1000;" >
+            <img src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
+          </v-badge>
         </li>
       </ul>
     </v-row>
@@ -95,6 +97,9 @@ export default {
   computed: {
     getUsuario() {
       return this.$store.getters.getUsuario;
+    },
+    getCartlen(){
+      return this.$store.getters.getCart.length 
     }
   }
 };

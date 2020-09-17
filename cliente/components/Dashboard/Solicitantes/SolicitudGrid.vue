@@ -11,23 +11,15 @@
                         <p style="font-weight:900;">${{solicitud.monto.toLocaleString()}}</p>
                         <v-row no-gutters class="grafRow">                        
                             <v-col cols="6" style="padding:0px 2px;">
-                                <svg height="36" width="36">
-                                <circle cx="18" cy="18" r="18" :fill="riesgoColor" />
-                                <text x="50%" y="50%" text-anchor="middle" stroke="white" stroke-width="1.5px" dy=".3em">{{solicitud.gradoRiesgo}}</text>
-                                </svg>                    
+                                <CirculoGradRsg    
+                                    medida="36"                                     
+                                    :gradoRiesgo="solicitud.gradoRiesgo"/>
                                 <p class="solTxtSize">Interés</p>
                                 <p class="solTxtSize">{{solicitud.tasaInteres}}%</p>
                             </v-col>
                             <v-col cols="6" style="border-left:solid 1px white;padding:0px 2px;">
                                 
-                                <svg height="20" width="20" viewBox="0 0 20 20">
-                                    <circle cx="10" cy="10" r="10" fill="white" />    
-                                    <circle class="pay" cx="10" cy="10" r="5" fill="transparent"
-                                            stroke="rgb(64, 249, 155)"         
-                                            stroke-width="10"               
-                                            transform="rotate(-90) translate(-20)"                          
-                                            :stroke-dasharray="circunferencia"/>      
-                                </svg> 
+                                <PayProgreso  medida="36"  :percent="this.percent"/>
                                 <p class="solTxtSize">Fondeado:</p>
                                 <p class="solTxtSize">24%</p>
                             </v-col>
@@ -44,15 +36,23 @@
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-chart-pie</v-icon> Monto faltnte: $51,500</p>
                     </div>
                     <div style="text-align:center;height:100%;">                        
-                        <nuxt-link class="greenBtn" style="flex-grow:0; padding: 3px 5px;margin-top:5px;" to="#">ver detalle</nuxt-link>
-                        
+                        <v-dialog max-width="800px"  v-model="dlgDetalle"  transition="slide-y-transition">
+                            <template v-slot:activator="{on,attrs}">
+                                <v-btn class="greenBtn invierteBtn" v-bind="attrs" v-on="on">ver detalle</v-btn>                            
+                            </template>
+                            <SolicitudDetalle @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
+                        </v-dialog>
                          <v-dialog max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">                        
-                                <v-btn class="purpleBtn invierteBtn"    v-bind="attrs" v-on="on">invertir</v-btn>
+                                <v-btn class="purpleBtn invierteBtn" v-bind="attrs" v-on="on">invertir</v-btn>
                             </template>                            
-                            <DialogInvierte v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false"/>
-                            <DialogInvierteError v-else @close="dlgInverte=false"/>
+                            <DialogInvierte v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false" @invertido="onInvertido"/>
+                            <DialogInvierteError v-if="getEfectivo<250 && dlgInverte==true " @close="dlgInverte=false"/>
                         </v-dialog>
+                        <v-dialog max-width="500px"  v-model="dlgListo"  transition="slide-y-transition">
+                            <DialogInvierteListo @close="dlgListo=false"/>
+                        </v-dialog>
+                        
                     </div>
                 </v-col>
             </v-row>
@@ -61,12 +61,26 @@
 </template>
 
 <script>
+import SolicitudDetalle from '@/components/Dashboard/Solicitantes/SolicitudDetalle.vue'
+import DialogInvierteListo from '@/components/Dashboard/Solicitantes/DialogInvierteListo.vue'
 import DialogInvierte from '@/components/Dashboard/Solicitantes/DialogInvierte.vue'
 import DialogInvierteError from '@/components/Dashboard/Solicitantes/DialogInvierteError.vue'
+import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg'
+import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso'
 export default {
+    methods:{
+        onInvertido(){
+            this.dlgInverte=false
+            this.dlgListo=true
+            this.dlgDetalle=false
+        }
+    },
     componets:{
         DialogInvierte,
-        DialogInvierteError
+        PayProgreso,
+        CirculoGradRsg,
+        DialogInvierteError,
+        DialogInvierteListo
     },
     props:{
         solicitud:{type:Object,required: true}
@@ -74,49 +88,21 @@ export default {
     data() {
         return {            
             percent:75,
-            dlgInverte:false
+            dlgInverte:false,
+            dlgDetalle:false,
+            dlgListo:false
         }
     },
     computed:{
         getEfectivo(){
             return this.$store.getters.getEfectivo
-        },
-        circunferencia(){
-            let c= this.percent * 31.4 / 100
-            return c+" 31.4"
-        },
-        riesgoColor(){
-            if (this.solicitud.gradoRiesgo=='A1') return 'rgb(0,255,0)';
-            if (this.solicitud.gradoRiesgo=='A2') return 'rgb(0,210,0)';
-            if (this.solicitud.gradoRiesgo=='A3') return 'rgb(0,180,0)';
-            if (this.solicitud.gradoRiesgo=='A4') return 'rgb(0,150,0)';            
-            if (this.solicitud.gradoRiesgo=='B1') return 'rgb(141, 216, 55)';            
-            if (this.solicitud.gradoRiesgo=='B2') return 'rgb(115, 192, 27)';            
-            if (this.solicitud.gradoRiesgo=='B3') return 'rgb(93, 163, 12)';            
-            if (this.solicitud.gradoRiesgo=='B4') return 'rgb(71, 124, 10)';            
-            if (this.solicitud.gradoRiesgo=='C1') return 'rgb(216, 216, 0)';            
-            if (this.solicitud.gradoRiesgo=='C2') return 'rgb(194, 194, 0);';            
-            if (this.solicitud.gradoRiesgo=='C3') return 'rgb(155, 155, 0)';            
-            if (this.solicitud.gradoRiesgo=='C4') return 'rgb(119, 119, 0)';            
-        }
+        }        
     }
     
 }
 </script>
 
-
 <style scoped>
-.pay {
-    
-  animation: circle-chart-fill 1.5s reverse; /* 1 */ 
-  transform: rotate(-90deg); /* 2, 3 */
-  transform-origin: center;
-}
-
-@keyframes circle-chart-fill {
-  to { stroke-dasharray: 0 100; }
-}
-
 .invierteBtn {
     border-radius: 0 !important;
     padding: 0px 0px !important;
@@ -129,10 +115,6 @@ export default {
     border-radius: 10px !important;
 }
 
-svg {
-    width: 36px;
-    height:36px;
-}
 
 .solTxtSize {
     font-size: 10px;
