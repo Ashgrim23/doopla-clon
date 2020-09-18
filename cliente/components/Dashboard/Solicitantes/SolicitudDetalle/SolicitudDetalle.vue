@@ -1,53 +1,28 @@
 <template>
     <div class="detalleContaner" >
         <v-row no-gutters >
-            <v-col cols="3" class="leftCol">
-                <div style="padding:10px 10px;text-align:center;">
-                    <v-icon size="70" color="rgb(111, 94, 158)">mdi-currency-usd-circle-outline</v-icon>
-                    <p>Alias del solicitante</p>
-                    <p style="font-size:25px;"><strong>{{solicitud.solicitante}}</strong></p>
-                </div>
-                <div style="padding:0px 30px;background-color:rgb(64, 249, 155)">
-                    <p ><strong>Generalidades</strong></p>
-                    <p ><strong>de la solicitud</strong></p>
-                </div>
-                <div style="padding-left:30px;">
-                    <ul>
-                        <li><nuxt-link to="#">Perfil del solicitante</nuxt-link></li>                    
-                        <li><nuxt-link to="#">Información crediticia</nuxt-link></li>
-                        <li><nuxt-link to="#">Finanzas personales</nuxt-link></li>
-                        <li><nuxt-link to="#">Pregunta al solicitante</nuxt-link></li>
-                    </ul>
-                </div>
-                <div style="background-color:rgb(111, 94, 158);text-align:center;padding:10px 0;">
-                    <p>Solicita</p>
-                    <h3>${{solicitud.monto.toLocaleString()}}</h3>
-                    <div style="display:flex;justify-content:center;">
-                        <div style="border-top:solid 1px white;padding-top:5px;padding-right:5px;padding-left:24px;">
-                            <CirculoGradRsg 
-                                medida="50"                                
-                                :gradoRiesgo="this.solicitud.gradoRiesgo" />            
-                            <p>Interés</p>
-                            <p><strong>{{solicitud.tasaInteres}}%</strong></p>
-                        </div>
-                        <div style="border-top:solid 1px white;border-left:solid 1px white;padding-top:5px;padding-left:5px;">
-                            <PayProgreso  medida="50"  :percent="this.percent"/>
-                            <p >Fondeado:</p>
-                            <p ><strong>24%</strong></p>
-                        </div>
+            <SolDtlColLateral v-if="this.isMounted && this.$vuetify.breakpoint.mdAndUp" :solicitud="this.solicitud" />
+            <SolDtlColFloat v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" :solicitud="this.solicitud" :show="show" @close="show=!show"/>                 
+            <v-col cols="12" md="9">              
+                 <div class="headerBand" >
+                    <button class="navToggle" @click="show=!show" v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>                        
+                    </button>                         
+                    
+                    
+                    
+                    <h2 style="color:white;font-weight:900;">Alias del solicitante: {{this.solicitud.solicitante}}</h2>
+                    <div style="text-align:right;padding-top:5px;padding-right:5px;">                                     
+                        <v-icon @click="$emit('close')"  color="rgb(64, 249, 155)" size="30">mdi-close</v-icon>
                     </div>
-                    
                 </div>
-            </v-col>
-            <v-col cols="9">
-                <div style="text-align:right;padding-top:5px;padding-right:5px;">                 
-                    
-                    <v-icon @click="$emit('close')"  color="rgb(64, 249, 155)" size="30">mdi-close</v-icon>
-                </div>
+                
                 <div>
                     <h2 class="tx-purp1">Generalidades de la solicitud</h2>
                 </div>
-                <div style="display:flex;justify-content:center;margin-top:25px;">
+                <div style="display:flex;justify-content:center;margin-top:25px;flex-wrap:wrap">
                     <ul style="color:rgb(111, 94, 158);">
                         <li><p>Plazo del crédito:</p></li>
                         <li><p>Préstamos en Doopla:</p></li>
@@ -81,22 +56,33 @@
                 
             </v-col>
         </v-row>
+        <v-row v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" style="justify-content:center; color:white;">
+            <v-col cols="6">
+            <SolDtlCharts  :solicitud="this.solicitud" percent="75"/>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
 <script>
-import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg'
-import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso'
+import SolDtlCharts from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolDtlCharts'
+import SolDtlColFloat from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolDtlColFloat'
+import SolDtlColLateral from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolDtlColLateral'
 export default {
-    components:{
-        CirculoGradRsg,
-        PayProgreso
+    components:{        
+        SolDtlColLateral,
+        SolDtlColFloat,
+        SolDtlCharts
     },
     data(){
         return{
-            percent:75,
+            show:false,
+            isMounted:false,            
             monto:250
         }
+    },
+    mounted(){
+        this.isMounted=true
     },
     props:{
         solicitud:{type:Object,required:true}
@@ -117,8 +103,8 @@ export default {
     methods:{
         onInvertir(){
             const inversion={
-               solicitud:this.solicitud._id,
-               monto:this.monto
+               solicitud:this.solicitud,
+               montoInversion:this.monto
             }
             this.$store.dispatch('addInversionToCart',inversion)
             this.$emit("invertido")
@@ -129,27 +115,45 @@ export default {
 
 
 <style scoped>
+ul {
+    list-style: none;    
+}
+
+.headerBand {
+    padding: 5px;
+    display:flex;
+    justify-content:space-between;    
+}
+
+.navToggle {
+  background-color: white;
+  border: solid 1px rgb(87,70,123);
+  outline-color: rgb(87,70,123);
+  margin-top:1px;
+  margin-left:1px;
+  padding: 9px 10px;
+  border-radius: 4px;
+}
+
+.icon-bar {
+  background-color: rgb(87,70,123);
+  outline-color: white;
+  display: block;
+  height: 2px;
+  margin-top: 4px;
+  width: 22px;
+}
+
 .invBtn {
     border-radius: 5px !important;
     height: 30px !important;    
     margin-left:30px;
 }
-ul {
-    list-style: none;    
-}
 
-a{
-    line-height: 35px;
-    text-decoration: none;
-}
 
 .detalleContaner{
     background-color: white;
-}
-
-.leftCol{
-    color:white;
-    background-color: rgb(160, 153, 179);
+    height: 100%;
 }
 
 .select{
@@ -161,5 +165,10 @@ a{
        padding: 3px 5px;
 }
 
+@media only screen and (max-width: 959px){
+    .headerBand {
+        background-color:rgb(87,70,123);
+    }
+}
 
 </style>

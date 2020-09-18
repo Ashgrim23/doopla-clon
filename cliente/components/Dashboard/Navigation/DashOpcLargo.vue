@@ -59,7 +59,9 @@
         </li>
         <li class="navMenu-cart">
           <v-badge :value="getCartlen>0" :content="getCartlen" overlap left bottom  color="rgb(255,0,0)" style="z-index:1000;" >
-            <img src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
+            <nuxt-link to="/Cart">
+              <img   src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">
+            </nuxt-link>
           </v-badge>
         </li>
       </ul>

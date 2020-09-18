@@ -24,7 +24,7 @@ export const mutations={
     incEnCanasta(state){
         let monto=0
         state.cart.forEach(inversion => {
-            monto+=inversion.monto
+            monto+=inversion.montoInversion
         });        
         state.cuenta.enCanasta=monto;
     }, 
@@ -68,11 +68,11 @@ export const mutations={
 
 export const actions={
     addInversionToCart(vuexContext,datos){        
-        const cartInversion=vuexContext.state.cart.find(inversion => inversion.solicitud===datos.solicitud )
+        const cartInversion=vuexContext.state.cart.find(inversion => inversion.solicitud===datos.solicitud._id )
         if (!cartInversion) {
             vuexContext.commit("pushToCart",datos)
         } else {
-            vuexContext.commit("incrementaMonto",{inversion:cartInversion,montoAdicional:datos.monto})   
+            vuexContext.commit("incrementaMonto",{inversion:cartInversion,montoAdicional:datos.montoInversion})   
         }    
         vuexContext.commit("incEnCanasta");
 
@@ -140,6 +140,9 @@ export const actions={
 }
 
 export const getters={
+    getEnCanasta(state){
+        return state.cuenta.enCanasta
+    },
     getCart(state) {
         return state.cart;
     },    

@@ -8,7 +8,7 @@
 <script>
 export default {
     props:{
-        medida:{type:Number,required:true},        
+        medida:{type:String,required:true},        
         gradoRiesgo:{type:String,required:true}
     },
     computed:{

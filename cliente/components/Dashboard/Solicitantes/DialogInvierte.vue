@@ -30,8 +30,8 @@ export default {
     methods:{
         onInvertir(){
             const inversion={
-               solicitud:this.solicitud._id,
-               monto:this.monto
+               solicitud:this.solicitud,
+               montoInversion:this.monto
             }
             this.$store.dispatch('addInversionToCart',inversion)
             this.$emit("invertido")

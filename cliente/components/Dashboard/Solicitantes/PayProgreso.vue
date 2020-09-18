@@ -12,7 +12,7 @@
 <script>
 export default {
     props:{
-        medida:{type:Number,required:true},        
+        medida:{type:String,required:true},        
         percent:{type:Number,required:true},
     },
     computed:{

@@ -1,6 +1,5 @@
 <template>    
-    <v-col cols="12" sm="6" md="4"  style="padding:6px;"  >   
-        
+    <v-col cols="12" sm="6" md="4"  style="padding:6px;"  >           
         <div class="solCardGrid">
             <v-row no-gutters>
                 <v-col cols="5" class="solCardCol1" >
@@ -12,7 +11,7 @@
                         <v-row no-gutters class="grafRow">                        
                             <v-col cols="6" style="padding:0px 2px;">
                                 <CirculoGradRsg    
-                                    medida="36"                                     
+                                    medida="36"                                   
                                     :gradoRiesgo="solicitud.gradoRiesgo"/>
                                 <p class="solTxtSize">Interés</p>
                                 <p class="solTxtSize">{{solicitud.tasaInteres}}%</p>
@@ -21,7 +20,7 @@
                                 
                                 <PayProgreso  medida="36"  :percent="this.percent"/>
                                 <p class="solTxtSize">Fondeado:</p>
-                                <p class="solTxtSize">24%</p>
+                                <p class="solTxtSize">{{this.percent}}%</p>
                             </v-col>
                             
                         </v-row>
@@ -36,20 +35,20 @@
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-chart-pie</v-icon> Monto faltnte: $51,500</p>
                     </div>
                     <div style="text-align:center;height:100%;">                        
-                        <v-dialog max-width="800px"  v-model="dlgDetalle"  transition="slide-y-transition">
+                        <v-dialog :fullscreen="$vuetify.breakpoint.xsOnly" max-width="800px"  v-model="dlgDetalle"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">
                                 <v-btn class="greenBtn invierteBtn" v-bind="attrs" v-on="on">ver detalle</v-btn>                            
                             </template>
                             <SolicitudDetalle @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
                         </v-dialog>
-                         <v-dialog max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
+                         <v-dialog :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">                        
                                 <v-btn class="purpleBtn invierteBtn" v-bind="attrs" v-on="on">invertir</v-btn>
                             </template>                            
-                            <DialogInvierte v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false" @invertido="onInvertido"/>
+                            <DialogInvierte  v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false" @invertido="onInvertido"/>
                             <DialogInvierteError v-if="getEfectivo<250 && dlgInverte==true " @close="dlgInverte=false"/>
                         </v-dialog>
-                        <v-dialog max-width="500px"  v-model="dlgListo"  transition="slide-y-transition">
+                        <v-dialog max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly"  v-model="dlgListo"  transition="slide-y-transition">
                             <DialogInvierteListo @close="dlgListo=false"/>
                         </v-dialog>
                         
@@ -61,7 +60,7 @@
 </template>
 
 <script>
-import SolicitudDetalle from '@/components/Dashboard/Solicitantes/SolicitudDetalle.vue'
+import SolicitudDetalle from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolicitudDetalle.vue'
 import DialogInvierteListo from '@/components/Dashboard/Solicitantes/DialogInvierteListo.vue'
 import DialogInvierte from '@/components/Dashboard/Solicitantes/DialogInvierte.vue'
 import DialogInvierteError from '@/components/Dashboard/Solicitantes/DialogInvierteError.vue'
