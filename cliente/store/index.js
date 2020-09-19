@@ -29,12 +29,12 @@ export const mutations={
         state.cuenta.enCanasta=monto;
     }, 
     pushToCart(state,inversion){
-        state.cart.push(inversion)
+        inversion.solicitud.montoInversion=inversion.montoInversion
+        state.cart.push(inversion.solicitud)
     },
     incrementaMonto(state,datos){
-        let indexOfInv=state.cart.indexOf(datos.inversion)
-        console.log(indexOfInv)
-        datos.inversion.monto+=datos.montoAdicional
+        let indexOfInv=state.cart.indexOf(datos.inversion)        
+        datos.inversion.montoInversion+=datos.montoAdicional
         state.cart.splice(indexOfInv,1,datos.inversion)
     },
     clearState(state){
@@ -63,16 +63,24 @@ export const mutations={
     clearToken(state) {
         state.token=null;
         state.usuario=null;
+    },
+    removeInversion(state,inversion){
+        let idx = state.cart.findIndex(inv => inv._id===inversion._id)        
+        state.cart.splice(idx,1)
+        state.cuenta.enCanasta-=inversion.montoInversion;        
     }
 }
 
 export const actions={
+    removeInversion(vuexContext,inversion){
+        vuexContext.commit("removeInversion",inversion)
+    },
     addInversionToCart(vuexContext,datos){        
-        const cartInversion=vuexContext.state.cart.find(inversion => inversion.solicitud===datos.solicitud._id )
-        if (!cartInversion) {
+        const cartSolicitud=vuexContext.state.cart.find(inversion => inversion._id===datos.solicitud._id )
+        if (!cartSolicitud) {
             vuexContext.commit("pushToCart",datos)
         } else {
-            vuexContext.commit("incrementaMonto",{inversion:cartInversion,montoAdicional:datos.montoInversion})   
+            vuexContext.commit("incrementaMonto",{inversion:cartSolicitud,montoAdicional:datos.montoInversion})   
         }    
         vuexContext.commit("incEnCanasta");
 
