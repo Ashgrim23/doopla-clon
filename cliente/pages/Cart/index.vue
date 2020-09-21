@@ -20,37 +20,15 @@
             </v-row>
             <v-row class="cartRow" >
                 <v-col>
-                    <v-row no-gutters style="font-size:12px;text-align:center;">
-                        <v-col cols="1">
-                            <p>Alias solicitante</p>
-                        </v-col>
-                        <v-col cols="1">
-                            <p>Calificacion</p>
-                        </v-col>
-                        <v-col cols="1">
-                            <p>Interés</p>
-                        </v-col>
-                        <v-col cols="1">
-                            <p>Monto</p>
-                            <p>Solicitado</p>
-                        </v-col>
-                         <v-col cols="1">
-                            <p>Monto</p>
-                            <p>Faltante</p>
-                        </v-col>
-                         <v-col cols="1">
-                            <p>Plazo</p>
-                            <p>(meses)</p>
-                        </v-col>
-                         <v-col cols="2">
-                            <p>Propósito</p>                            
-                        </v-col>
-                        <v-col cols="4">
-                            <p>Monto a Invertir</p>                            
-                        </v-col>
-                    </v-row>
-                    <EmptyCartRow v-if="getEnCanasta==0" />
-                    <CartRow  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion" />
+                    <CartRowHeader v-if="this.$vuetify.breakpoint.mdAndUp" />
+                    <EmptyCartRow v-if="getEnCanasta==0" />     
+                    <v-template v-if="this.$vuetify.breakpoint.mdAndUp">
+                        <CartRow  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion" />
+                    </v-template>
+                    <v-template v-if="this.$vuetify.breakpoint.smAndDown">
+                        <CarCard  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion"/>
+                    </v-template>                   
+                    
                     <v-row style="justify-content:flex-end;margin-top:20px;align-items:flex-end;">
                         <p  style="font-size:18px;font-weight:900;color:rgb(87,70,123);">Total:&nbsp;</p>
                         <span class="cartTot">${{this.getEnCanasta}}</span>                        
@@ -58,7 +36,7 @@
                 </v-col>
             </v-row>
             <v-row dense style="margin-top:20px;" >                
-                <v-col cols="6" class="subHeader" >
+                <v-col cols="12" md="6" class="subHeader" order-md1 order="2" >
                     <div>                        
                         <p>Recuerda que una de las razones por las cuales puedes obtener buenos rendimientos 
                         se debe a que el interés que pagan los acreditados se destina a ti inversionista, pues eres tú 
@@ -66,7 +44,7 @@
                         de las comisiones que cobra a ambos.</p>
                     </div>                                                            
                 </v-col>            
-                <v-col cols="6">
+                <v-col cols="12" md="6" order-md2 order="1">
                     <v-btn id="confBtn" v-if="getEnCanasta>0" class="greenBtn confBtn" v-bind="attrs" v-on="on">confirmar</v-btn>                            
                 </v-col>
             </v-row>
@@ -119,6 +97,7 @@
 
 <script>
 import EmptyCartRow from '@/components/Dashboard/Cart/EmptyCartRow'
+import CartRowHeader from '@/components/Dashboard/Cart/CartRowHeader'
 export default {
     components:{
         EmptyCartRow

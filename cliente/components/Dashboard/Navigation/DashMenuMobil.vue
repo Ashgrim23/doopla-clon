@@ -11,10 +11,16 @@
         <DashOpcMobil :show="show" @close="show=!show"/>
       </v-col>
       <v-col cols="9" style="text-align: center;">
-        <img class="imgLogo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
+        <nuxt-link to="/resumen-cuenta-inversionista">
+          <img class="imgLogo" src="https://doopla-clone.s3.us-east-2.amazonaws.com/logo.png">
+        </nuxt-link>
       </v-col>      
       <v-col cols="2">
-          <img alt="Inversiones" class="imgCart" src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">          
+        <v-badge :value="getCartlen>0" :content="getCartlen" overlap left bottom  color="rgb(255,0,0)" style="z-index:1000;">
+          <nuxt-link to="/Cart">
+            <img alt="Inversiones" class="imgCart" src="https://doopla-clone.s3.us-east-2.amazonaws.com/ico-basket.png">          
+          </nuxt-link>
+        </v-badge>
       </v-col>     
     </v-row>
   </div>
@@ -27,6 +33,11 @@ export default {
     return {
       show: false
     };
+  },
+  computed:{
+    getCartlen(){
+      return this.$store.getters.getCart.length 
+    }
   }
 };
 </script>
