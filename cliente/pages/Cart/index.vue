@@ -22,12 +22,12 @@
                 <v-col>
                     <CartRowHeader v-if="this.$vuetify.breakpoint.mdAndUp" />
                     <EmptyCartRow v-if="getEnCanasta==0" />     
-                    <v-template v-if="this.$vuetify.breakpoint.mdAndUp">
+                    <template v-if="this.$vuetify.breakpoint.mdAndUp">
                         <CartRow  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion" />
-                    </v-template>
-                    <v-template v-if="this.$vuetify.breakpoint.smAndDown">
-                        <CarCard  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion"/>
-                    </v-template>                   
+                    </template>
+                    <template v-if="this.$vuetify.breakpoint.smAndDown">
+                        <SolicitudGrid  v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion"/>
+                    </template>                   
                     
                     <v-row style="justify-content:flex-end;margin-top:20px;align-items:flex-end;">
                         <p  style="font-size:18px;font-weight:900;color:rgb(87,70,123);">Total:&nbsp;</p>
@@ -36,7 +36,7 @@
                 </v-col>
             </v-row>
             <v-row dense style="margin-top:20px;" >                
-                <v-col cols="12" md="6" class="subHeader" order-md1 order="2" >
+                <v-col  cols="12" md="6" class="subHeader legendBtmCol" >
                     <div>                        
                         <p>Recuerda que una de las razones por las cuales puedes obtener buenos rendimientos 
                         se debe a que el interés que pagan los acreditados se destina a ti inversionista, pues eres tú 
@@ -44,8 +44,8 @@
                         de las comisiones que cobra a ambos.</p>
                     </div>                                                            
                 </v-col>            
-                <v-col cols="12" md="6" order-md2 order="1">
-                    <v-btn id="confBtn" v-if="getEnCanasta>0" class="greenBtn confBtn" v-bind="attrs" v-on="on">confirmar</v-btn>                            
+                <v-col class="confBtnCol" cols="12" md="6"  >
+                    <v-btn id="confBtn" v-if="getEnCanasta>0" class="greenBtn confBtn" >confirmar</v-btn>                            
                 </v-col>
             </v-row>
         </v-container>
@@ -54,6 +54,13 @@
 </template>
 
 <style >
+.legendBtmCol {
+    order:1
+}
+
+.confBtnCol {
+    order:2
+}
 
 #confBtn .v-btn__content {
     color:rgb(87,70,123) !important;
@@ -87,17 +94,31 @@
 
 
 .subHeader{
-    font-size:12px;
+    font-size:12px ;
     border-radius: 5px;
     background-color:rgb(232, 232, 232);
     display:flex;
     margin-bottom: 20px;
 }
+
+@media only screen and (max-width:960px) {
+    .legendBtmCol {
+        order:2
+    }
+
+    .confBtnCol {
+        order:1;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
 </style>
 
 <script>
 import EmptyCartRow from '@/components/Dashboard/Cart/EmptyCartRow'
 import CartRowHeader from '@/components/Dashboard/Cart/CartRowHeader'
+import SolicitudGrid from '@/components/Dashboard/Solicitantes/SolicitudGrid'
 export default {
     components:{
         EmptyCartRow

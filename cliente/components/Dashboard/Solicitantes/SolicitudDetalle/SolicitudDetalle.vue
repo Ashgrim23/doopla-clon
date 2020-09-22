@@ -58,7 +58,7 @@
         </v-row>
         <v-row v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" style="justify-content:center; color:white;">
             <v-col cols="6">
-            <SolDtlCharts  :solicitud="this.solicitud" percent="75"/>
+            <SolDtlCharts  :solicitud="this.solicitud" :percent="this.percent"/>
             </v-col>
         </v-row>
     </div>
@@ -76,6 +76,7 @@ export default {
     },
     data(){
         return{
+            percent:75,
             show:false,
             isMounted:false,            
             monto:250

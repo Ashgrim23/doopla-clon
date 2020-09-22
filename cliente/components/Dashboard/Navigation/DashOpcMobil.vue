@@ -20,7 +20,7 @@
                     <li class="itemNorm"><nuxt-link to="/solicitantes-cuenta-inversionista" >INVIERTE AHORA</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#" >TRANSFIERE FONDOS</nuxt-link></li>
                     <li class="itemNorm"><nuxt-link to="#"  >SOLICITAR PRESTSAMO</nuxt-link></li>                
-                    <v-separator></v-separator>
+                    
                     <li class="itemNorm">
                         <nuxt-link to="#" @click.native="onLogout" >CERRAR SESION
                             <v-icon style="color:black;float:right;" >mdi-exit-to-app</v-icon>
