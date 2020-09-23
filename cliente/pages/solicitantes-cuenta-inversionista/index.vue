@@ -9,7 +9,8 @@
       <v-row no-gutters class="titleRow">
         <span class="tx-purp1 dooplaTitle" style="margin-bottom:20px;">INVIERTE AHORA</span>
         <div class="viewsContainer" >
-          <v-icon
+          <v-icon            
+            v-if="this.$vuetify.breakpoint.mdAndUp"
             id="listView"
             @click="viewToggle"
             :class="{disabledView:grid}"
@@ -25,9 +26,16 @@
           >mdi-view-grid-outline</v-icon>
         </div>
       </v-row>
-      <v-row class="solicitudesRow">        
+      <CartRowHeader v-if="!this.grid"/>
+      <v-row class="solicitudesRow">                  
           <template v-if="solicitudes">
-            <SolicitudGrid v-for="(solicitud,key) in solicitudes" :key="key" :solicitud="solicitud"/>                        
+              <template v-if="this.grid">
+                <SolicitudGrid v-for="(solicitud,key) in solicitudes" :key="key" :solicitud="solicitud" :isCanasta="false"/>                        
+              </template>
+              <template v-else>                
+                <SolicitudList v-for="(solicitud,key) in solicitudes" :key="key" :solicitud="solicitud" :isCanasta="false"/>
+              </template> 
+                    
           </template>
           <div v-else style="padding:3% 15%">
               <p class="tx-purp1" style="font-size:20px;">
@@ -42,7 +50,19 @@
 
 <script>
 import SolicitudGrid from '@/components/Dashboard/Solicitantes/SolicitudGrid'
+import CartRowHeader from '@/components/Dashboard/Cart/CartRowHeader'
+import SolicitudList from '@/components/Dashboard/Solicitantes/SolicitudList'
 export default {
+   created() {
+        if (typeof window !== 'undefined') {
+          window.addEventListener("resize", this.checkSize);
+        }
+    },
+    destroyed() {
+        if (typeof window !== 'undefined') {
+          window.removeEventListener("resize", this.checkSize);
+        }
+    },
   async asyncData({$axios}){
     try {
       const response =await $axios.get('api/solicitudes')
@@ -58,7 +78,9 @@ export default {
 
   },
   components:{
-    SolicitudGrid
+    SolicitudGrid,
+    CartRowHeader,
+    SolicitudList
   },
   data() {
     return {
@@ -68,6 +90,11 @@ export default {
   methods: {
     viewToggle(event) {
       event.target.id == "gridView" ? (this.grid = true) : (this.grid = false);
+    },
+    checkSize(event){
+       if (window.innerWidth<960) {
+         this.grid=true
+       }
     }
   },
   computed: {

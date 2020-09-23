@@ -1,5 +1,5 @@
 <template>
-    <v-row no-gutters style="font-size:12px;text-align:center;">
+    <v-row no-gutters style="font-size:12px;text-align:center;background-color:white;border-radius:5px;">
                         <v-col cols="1">
                             <p>Alias solicitante</p>
                         </v-col>

@@ -19,21 +19,22 @@
                 </v-col>               
             </v-row>
             <v-row class="cartRow" >
-                <v-col>
-                    <CartRowHeader v-if="this.$vuetify.breakpoint.mdAndUp" />
+                <template v-if="this.$vuetify.breakpoint.smAndDown">
+                        <SolicitudGrid :isCanasta="true" :onRemove="removeInversion"  v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion"/>
+                        <EmptyCartRow v-if="getEnCanasta==0" />     
+                </template>   
+                <v-col v-if="this.$vuetify.breakpoint.mdAndUp">
+                    <CartRowHeader/>
                     <EmptyCartRow v-if="getEnCanasta==0" />     
-                    <template v-if="this.$vuetify.breakpoint.mdAndUp">
-                        <CartRow  v-for="(inversion,key) in getCart" :key="key" :inversion="inversion" />
-                    </template>
-                    <template v-if="this.$vuetify.breakpoint.smAndDown">
-                        <SolicitudGrid  v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion"/>
-                    </template>                   
-                    
-                    <v-row style="justify-content:flex-end;margin-top:20px;align-items:flex-end;">
-                        <p  style="font-size:18px;font-weight:900;color:rgb(87,70,123);">Total:&nbsp;</p>
-                        <span class="cartTot">${{this.getEnCanasta}}</span>                        
-                    </v-row>                    
+                    <SolicitudList  :isCanasta="true" v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion" :onRemove="removeInversion" />
                 </v-col>
+                
+            </v-row>
+            <v-row style="justify-content:flex-end;">
+                <div style="display:flex;margin-top:10px;margin-right:15px;">                    
+                    <p style="font-size:18px;font-weight:900;color:rgb(87,70,123);">Total:&nbsp;</p>
+                    <span class="cartTot">${{this.getEnCanasta}}</span>                             
+                </div>
             </v-row>
             <v-row dense style="margin-top:20px;" >                
                 <v-col  cols="12" md="6" class="subHeader legendBtmCol" >
@@ -109,7 +110,8 @@
     .confBtnCol {
         order:1;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+        
     }
 }
 
@@ -119,9 +121,13 @@
 import EmptyCartRow from '@/components/Dashboard/Cart/EmptyCartRow'
 import CartRowHeader from '@/components/Dashboard/Cart/CartRowHeader'
 import SolicitudGrid from '@/components/Dashboard/Solicitantes/SolicitudGrid'
+import SolicitudList from '@/components/Dashboard/Solicitantes/SolicitudList'
 export default {
     components:{
-        EmptyCartRow
+        EmptyCartRow,
+        CartRowHeader,
+        SolicitudList,
+        SolicitudGrid
     },
     computed:{
         getEfectivo(){
@@ -133,6 +139,12 @@ export default {
         getCart(){
             return this.$store.getters.getCart
         }
+    },
+    methods: {
+        removeInversion(inversion){            
+            this.$store.dispatch("removeInversion",inversion)
+        }
     }
+    
 }
 </script>

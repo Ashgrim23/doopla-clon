@@ -6,14 +6,14 @@
             <v-col cols="12" md="9">              
                  <div class="headerBand" >
                     <button class="navToggle" @click="show=!show" v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown">
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar" style="margin-top:0;"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
-                    </button>                         
-                    
-                    
-                    
-                    <h2 style="color:white;font-weight:900;">Alias del solicitante: {{this.solicitud.solicitante}}</h2>
+                    </button>                                             
+                    <div style="text-align:center;">
+                        <h2 style="color:white;font-weight:900;">Alias del solicitante</h2>                    
+                        <h2 style="color:white;font-weight:900;">{{this.solicitud.solicitante}}</h2>
+                    </div>
                     <div style="text-align:right;padding-top:5px;padding-right:5px;">                                     
                         <v-icon @click="$emit('close')"  color="rgb(64, 249, 155)" size="30">mdi-close</v-icon>
                     </div>
@@ -121,12 +121,15 @@ ul {
 }
 
 .headerBand {
-    padding: 5px;
+    padding: 5px;    
     display:flex;
     justify-content:space-between;    
 }
 
 .navToggle {
+  width:44px;
+  height: 38px;
+  align-self: center;
   background-color: white;
   border: solid 1px rgb(87,70,123);
   outline-color: rgb(87,70,123);

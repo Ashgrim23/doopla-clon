@@ -34,20 +34,29 @@
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-cash-multiple</v-icon> Acepta: ${{solicitud.monto.toLocaleString()}}</p>
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-chart-pie</v-icon> Monto faltnte: $51,500</p>
                     </div>
-                    <div style="text-align:center;height:100%;">                        
+                    <div style="text-align:center;height:100%;">        
+                        <template v-if="this.isCanasta">
+                            <p>Monto a invertir</p>
+                            <span  class="invTot">${{this.solicitud.montoInversion.toLocaleString()}}</span>
+                        </template>                
                         <v-dialog :fullscreen="$vuetify.breakpoint.xsOnly" max-width="800px"  v-model="dlgDetalle"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">
                                 <v-btn class="greenBtn invierteBtn" v-bind="attrs" v-on="on">ver detalle</v-btn>                            
                             </template>
                             <SolicitudDetalle @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
                         </v-dialog>
-                         <v-dialog :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
+                        
+                        <v-dialog v-if="!this.isCanasta" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
                             <template v-slot:activator="{on,attrs}">                        
                                 <v-btn class="purpleBtn invierteBtn" v-bind="attrs" v-on="on">invertir</v-btn>
                             </template>                            
                             <DialogInvierte  v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false" @invertido="onInvertido"/>
                             <DialogInvierteError v-if="getEfectivo<250 && dlgInverte==true " @close="dlgInverte=false"/>
                         </v-dialog>
+                        
+                        <template v-if="this.isCanasta">
+                            <v-btn class="redBtn invierteBtn" width="150" @click="onRemove(solicitud)" >Eliminar</v-btn>
+                        </template>
                         <v-dialog max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly"  v-model="dlgListo"  transition="slide-y-transition">
                             <DialogInvierteListo @close="dlgListo=false"/>
                         </v-dialog>
@@ -82,6 +91,8 @@ export default {
         DialogInvierteListo
     },
     props:{
+        onRemove:Function,
+        isCanasta:{type:Boolean,default:false},
         solicitud:{type:Object,required: true}
     },    
     data() {
@@ -102,9 +113,7 @@ export default {
 </script>
 
 <style scoped>
-.invierteBtn {
-    border-radius: 0 !important;
-    padding: 0px 0px !important;
+.invierteBtn {       
     margin-top:5px !important;
     font-size: 9px;
 }
