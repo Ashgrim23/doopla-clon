@@ -25,7 +25,7 @@
             <tr>
               <td style="text-align:center">+</td>
               <td style="text-align:left;">Préstamos en proceso de fondeo:</td>
-              <td style="text-align:right;">${{getCuenta.prestamosFondeo}}</td>
+              <td style="text-align:right;">${{getCuenta.enProceso}}</td>
             </tr>
             <tr>
               <td style="text-align:center">+</td>

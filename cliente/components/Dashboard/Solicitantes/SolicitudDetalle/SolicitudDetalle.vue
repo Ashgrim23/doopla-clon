@@ -36,7 +36,7 @@
                     <ul style="color:rgb(87,70,123);font-weight:900;margin:0 20px;">
                         <li><p>{{this.solicitud.plazo}} meses</p></li>
                         <li><p>3</p></li>
-                        <li><p>$#,####</p></li>
+                        <li><p>${{solicitud.statsFondeado.montoFondeado.toLocaleString()}}</p></li>
                         <li><p>## días</p></li>
                         <li><p>{{this.solicitud.tasaInteres}}%</p></li>
                         <li><p>{{this.solicitud.plazo}}</p></li>
@@ -56,9 +56,9 @@
                 
             </v-col>
         </v-row>
-        <v-row v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" style="justify-content:center; color:white;">
-            <v-col cols="6">
-            <SolDtlCharts  :solicitud="this.solicitud" :percent="this.percent"/>
+        <v-row no-gutters v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" style="justify-content:center; color:white;">
+            <v-col cols="6" style="padding-bottom:25px;">
+            <SolDtlCharts  :solicitud="this.solicitud" :percent="parseFloat(solicitud.statsFondeado.porcFondeado).toFixed(2)"/>
             </v-col>
         </v-row>
     </div>
@@ -75,8 +75,7 @@ export default {
         SolDtlCharts
     },
     data(){
-        return{
-            percent:75,
+        return{            
             show:false,
             isMounted:false,            
             monto:250

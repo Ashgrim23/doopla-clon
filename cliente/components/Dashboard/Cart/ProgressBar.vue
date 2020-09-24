@@ -1,6 +1,6 @@
 <template>
     <div style="display:flex;align-items:center;justify">
-        <p style="font-size:14px;">{{this.percent}}% fondeado</p>
+        <p style="font-size:14px;">{{parseFloat(this.percent).toFixed(2)}}% fondeado</p>
         <ul>
             <li><span  class="progSpan" :class="{'p10':(this.percent>=10)}"></span></li>
             <li><span class="progSpan" :class="{'p20':(this.percent>=20)}"></span></li>

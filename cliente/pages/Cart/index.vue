@@ -46,7 +46,7 @@
                     </div>                                                            
                 </v-col>            
                 <v-col class="confBtnCol" cols="12" md="6"  >
-                    <v-btn id="confBtn" v-if="getEnCanasta>0" class="greenBtn confBtn" >confirmar</v-btn>                            
+                    <v-btn id="confBtn" @click="onConfirmar" v-if="getEnCanasta>0" class="greenBtn confBtn" >confirmar</v-btn>                            
                 </v-col>
             </v-row>
         </v-container>
@@ -91,8 +91,6 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0px 7px 3px -3px inset,
    rgba(0, 0, 0, 0.3) 0px -7px 3px -3px inset;
 }
-
-
 
 .subHeader{
     font-size:12px ;
@@ -143,6 +141,9 @@ export default {
     methods: {
         removeInversion(inversion){            
             this.$store.dispatch("removeInversion",inversion)
+        },
+        async onConfirmar(){
+            let res=  await this.$store.dispatch("confirmaInversion")            
         }
     }
     

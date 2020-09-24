@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 const router=require('express').Router()
-const Deposito=require('../models/depositos')
+const Deposito=require('../models/deposito')
 const verifyToken=require('../middlewares/verify-token')
 const moment=require("moment")
 

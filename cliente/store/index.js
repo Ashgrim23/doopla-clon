@@ -1,8 +1,7 @@
 import Cookie from 'js-cookie'
 
 export const state=()=>({
-    cart:[],
-    cartLenght:0,
+    cart:[],    
     cuenta: {
         rendimiento:0,
         intGenerados:0,
@@ -13,8 +12,7 @@ export const state=()=>({
         enProceso:0,
         enCanasta:0,
         retiros:0,
-        prestamosActivos:0,
-        prestamosFondeo:0
+        prestamosActivos:0        
     },
     usuario:null,
     token:null
@@ -37,7 +35,11 @@ export const mutations={
         datos.inversion.montoInversion+=datos.montoAdicional
         state.cart.splice(indexOfInv,1,datos.inversion)
     },
-    clearState(state){
+    clearCart(state) {
+        state.cart=[];
+        state.cuenta.enCanasta=0;
+    },
+    clearCuenta(state){
         state.cuenta= {
             rendimiento:0,
             intGenerados:0,
@@ -54,8 +56,9 @@ export const mutations={
     },
     setCuenta(state,data){        
         if (data.depositos) state.cuenta.depositos=data.depositos;
+        if (data.enProceso) state.cuenta.enProceso=data.enProceso;
 
-    },
+    },    
     setToken(state,data) {
         state.token=data.token
         state.usuario=data.usuario
@@ -72,6 +75,20 @@ export const mutations={
 }
 
 export const actions={
+    async confirmaInversion(vuexContext){
+        try {
+            let res= await this.$axios.$post('api/inversion',{inversiones:vuexContext.state.cart})                
+            if (res.exito){
+                    vuexContext.commit("clearCart")
+                    vuexContext.dispatch("loadCuenta")
+                return true
+            }
+        } catch (error) {
+            console.log(error.message)
+            return false
+        }
+        
+    },
     removeInversion(vuexContext,inversion){
         vuexContext.commit("removeInversion",inversion)
     },
@@ -92,12 +109,16 @@ export const actions={
     },
     async loadCuenta(vuexContext){
         let getDepositos=this.$axios.$get("/api/Totdepositos")
-        const [depositosResp] =await Promise.all([
-            getDepositos
+        let getEnProceso=this.$axios.$get("/api/TotInversiones")
+        const [depositosResp,enProcesoResp] =await Promise.all([
+            getDepositos,
+            getEnProceso
         ])
         let data={};
         if (depositosResp.exito) 
             data.depositos=depositosResp.totDepositos;
+        if (enProcesoResp.exito)
+            data.enProceso=enProcesoResp.totInversiones
         
         vuexContext.commit('setCuenta',data)
         
@@ -129,7 +150,8 @@ export const actions={
         vuexContext.commit("clearToken");
         Cookie.remove('jwt')
         Cookie.remove('usuario')
-        vuexContext.commit("clearState");
+        vuexContext.commit("clearCuenta");
+        vuexContext.commit("clearCart");
     },
     async logeaUsuario(vuexContext,data){
         try {
@@ -167,7 +189,8 @@ export const getters={
         return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros                    
     },
     getValorCnt(state){
-        return state.cuenta.prestamosFondeo+state.cuenta.prestamosActivos + state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas+state.cuenta.enProceso-state.cuenta.enCanasta+state.cuenta.retiros                    
+        let efectivo=state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros;
+        return efectivo+state.cuenta.enProceso+state.cuenta.prestamosActivos 
     }
 
 }

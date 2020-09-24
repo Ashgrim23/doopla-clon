@@ -21,6 +21,11 @@
         <v-row  style="justify-content:center;padding:0 40px;">
           <v-col cols="12" md="4">
             <v-form class="regForm">
+              <v-alert v-if="errores.length>0"   dense type="error" style="background-color:rgb(255, 82, 82);">
+                <ul style="list-style-type:none">
+                  <li v-for="(error,key) in errores" :key=key>{{error}}</li>                
+                </ul>
+              </v-alert>
                <input
                 class="formInput"
                 type="email"
@@ -54,7 +59,7 @@
                 required
               >
 
-              <v-checkbox value="false" type="checkbox" name="legal" id="checkbox1" >
+              <v-checkbox value="false" v-model="check" type="checkbox" name="legal" id="checkbox1" >
                 <template v-slot:label>
                   <div>
                     <p class="tx-purp1" style="font-size:12px;text-align:justify">
@@ -81,7 +86,9 @@ export default {
   layout:"landingLayout",
   data(){
     return {
-      data:{
+      errores:[],
+      check:false,
+      data:{        
         nombre:"",
         email:"",
         password:"",
@@ -96,20 +103,24 @@ export default {
   methods:{
     async onSubmit(){
       try {
-        if (!this.data.nombre.length>0) {
-          console.log("error")
-          return 
-        }
-        let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)
-        
-        if (respuesta.exito) {
-          let res =await this.$store.dispatch("logeaUsuario",this.data)
-          if (res.exito) {
-            this.$router.push('/resumen-cuenta-inversionista')
+        this.errores=[];
+        if (!this.data.nombre.length>0) this.errores.push('Nombre invalido')          
+        if (!this.data.email.length>0) this.errores.push('Email invalido')          
+        if (!this.data.password.length>0) this.errores.push('Password invalido')          
+        if (!this.data.password_conf.length>0) this.errores.push('Confirmacion de password invalido')          
+        if (this.data.password_conf!=this.data.password) this.errores.push('La confirmacion de password y la password no son iguales')          
+        if (!this.check) this.errores.push('Debe aceptar los terminos y condiciones')          
+        if (this.errores.length==0) {
+          let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)        
+          if (respuesta.exito) {
+            let res =await this.$store.dispatch("logeaUsuario",this.data)
+            if (res.exito) {
+              this.$router.push('/resumen-cuenta-inversionista')
+            }          
+          } else {
+            if (respuesta.mensaje.startsWith("E11000 duplicate key error") ) this.errores.push(`Ya existe una cuenta con el correo ${this.data.email}`)
           }
-          
         }
-        
       } catch (error) {
         console.log(error)
       }

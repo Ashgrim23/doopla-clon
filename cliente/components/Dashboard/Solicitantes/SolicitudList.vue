@@ -18,7 +18,7 @@
                 <p style="font-size:14px;">${{this.solicitud.monto.toLocaleString()}}.00</p>
             </v-col >
             <v-col cols="1" class="cartCell" style="justify-content:center;">
-                <p style="font-size:14px;">$0.00</p>
+                <p style="font-size:14px;">${{(this.solicitud.monto-this.solicitud.statsFondeado.montoFondeado).toLocaleString()}}</p>
             </v-col>
             <v-col cols="1" class="cartCell" style="justify-content:center;">
                 <p style="font-size:14px;">{{this.solicitud.plazo}}</p>
@@ -53,7 +53,7 @@
         </v-row>    
         <v-row style="background-color:white;padding-bottom:10px;"> 
             <v-col cols="12">
-                <ProgressBar :percent="this.percent"/>
+                <ProgressBar :percent="solicitud.statsFondeado.porcFondeado"/>
             </v-col>
         </v-row>    
     </div>
@@ -69,8 +69,7 @@ import SolicitudDetalle from '@/components/Dashboard/Solicitantes/SolicitudDetal
 import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg'
 export default {   
     data(){
-        return {
-            percent:100,
+        return {            
             dlgDetalle:false,
             dlgInverte:false,
             dlgListo:false

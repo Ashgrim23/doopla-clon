@@ -18,9 +18,9 @@
                             </v-col>
                             <v-col cols="6" style="border-left:solid 1px white;padding:0px 2px;">
                                 
-                                <PayProgreso  medida="36"  :percent="this.percent"/>
+                                <PayProgreso  medida="36"  :percent="solicitud.statsFondeado.porcFondeado"/>
                                 <p class="solTxtSize">Fondeado:</p>
-                                <p class="solTxtSize">{{this.percent}}%</p>
+                                <p class="solTxtSize">{{parseFloat(solicitud.statsFondeado.porcFondeado).toFixed(2)}}%</p>
                             </v-col>
                             
                         </v-row>
@@ -32,7 +32,7 @@
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-timer-outline</v-icon> Faltan: 38 día(s) para fondearse</p>
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-calendar-month</v-icon> Plazo: {{solicitud.plazo}} meses</p>
                         <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-cash-multiple</v-icon> Acepta: ${{solicitud.monto.toLocaleString()}}</p>
-                        <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-chart-pie</v-icon> Monto faltnte: $51,500</p>
+                        <p class="solTxtSize" style="line-height: 20px;"><v-icon color="rgb(87,70,123)" size="20">mdi-chart-pie</v-icon> Monto faltnte: ${{(solicitud.monto-solicitud.statsFondeado.montoFondeado).toLocaleString()}}</p>
                     </div>
                     <div style="text-align:center;height:100%;">        
                         <template v-if="this.isCanasta">
@@ -96,8 +96,7 @@ export default {
         solicitud:{type:Object,required: true}
     },    
     data() {
-        return {            
-            percent:75,
+        return {                        
             dlgInverte:false,
             dlgDetalle:false,
             dlgListo:false

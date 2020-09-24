@@ -1,9 +1,10 @@
 const router = require('express').Router()
 const verifyToken =require('../middlewares/verify-token')
-const Sols = require('../models/solicitudes')
+const Sols = require('../models/solicitud')
 const moment=require("moment")
+const Inversion = require('../models/inversion')
 
-// ruta solo usada para crear solicitudes dummy
+//ruta solo usada para crear solicitudes dummy
 // router.post('/solicitud',async(req,res)=>{
 //     try {
 //         const solicitud= new Sols()
@@ -35,7 +36,7 @@ const moment=require("moment")
 
 router.get('/solicitudes',verifyToken,async (req,res)=>{
     try {
-        const solicitudes = await Sols.find({fondeado:false})    
+        const solicitudes = await Sols.find({fondeado:false}).populate('inversiones','montoInversion').exec()
         if (solicitudes) {
             res.json({
                 exito:true,

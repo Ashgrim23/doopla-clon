@@ -17,7 +17,7 @@
                         <li><nuxt-link to="#">Pregunta al solicitante</nuxt-link></li>
                     </ul>
                 </div>
-                <SolDtlCharts v-if="this.isMounted && this.$vuetify.breakpoint.mdAndUp" :solicitud="this.solicitud" :percent="this.percent"/>
+                <SolDtlCharts v-if="this.isMounted && this.$vuetify.breakpoint.mdAndUp" :solicitud="this.solicitud" :percent="parseFloat(solicitud.statsFondeado.porcFondeado).toFixed(2)"/>
             </v-col>
 </template>
 
@@ -37,8 +37,7 @@ export default {
     },
     data(){
         return {
-            isMounted:false,
-            percent:75
+            isMounted:false
         }
     },
     mounted(){
