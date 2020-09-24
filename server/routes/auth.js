@@ -1,6 +1,9 @@
 const router=require('express').Router()
 const User=require('../models/user')
+const Recompensa=require('../models/recompensa')
+const Deposito =require('../models/deposito')
 const jwt =require('jsonwebtoken')
+const moment = require('moment')
 
 router.post('/registro',async(req,res)=>{
     if (!req.body.email || !req.body.password){
@@ -15,6 +18,17 @@ router.post('/registro',async(req,res)=>{
             newUser.email=req.body.email
             newUser.password=req.body.password
             await newUser.save()
+            let newDepo=new Deposito()
+            newDepo.usuario=newUser._id;
+            newDepo.monto=500;
+            newDepo.fecha=moment()
+            await newDepo.save()
+            let newRecom=new Recompensa()
+            newRecom.usuario=newUser._id;
+            newRecom.fecha=moment()
+            newRecom.monto=500;
+            await newRecom.save()
+    
             let token=jwt.sign(newUser.toJSON(),process.env.SECRET,{
                 expiresIn:604800 
             })

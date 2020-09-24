@@ -22,19 +22,20 @@
           <v-col cols="12" md="4">
             <v-form class="regForm">
               <v-alert v-if="errores.length>0"   dense type="error" style="background-color:rgb(255, 82, 82);">
-                <ul style="list-style-type:none">
-                  <li v-for="(error,key) in errores" :key=key>{{error}}</li>                
+                <ul >
+                  <li style="font-size:14px;" v-for="(error,key) in errores" :key=key>{{error}}</li>                
                 </ul>
               </v-alert>
                <input
                 class="formInput"
-                type="email"
-                name="email"
+                type="text"
+                name="text"
                 v-model="data.nombre"
                 placeholder="Nombre"
                 required
               >
               <input
+                id="emailInput"
                 class="formInput"
                 type="email"
                 name="email"
@@ -104,24 +105,26 @@ export default {
     async onSubmit(){
       try {
         this.errores=[];
+        let elEmail=document.getElementById("emailInput")        
         if (!this.data.nombre.length>0) this.errores.push('Nombre invalido')          
-        if (!this.data.email.length>0) this.errores.push('Email invalido')          
+        if (!this.data.email.length>0 || !elEmail.validity.valid) this.errores.push('Email invalido')                  
         if (!this.data.password.length>0) this.errores.push('Password invalido')          
         if (!this.data.password_conf.length>0) this.errores.push('Confirmacion de password invalido')          
         if (this.data.password_conf!=this.data.password) this.errores.push('La confirmacion de password y la password no son iguales')          
         if (!this.check) this.errores.push('Debe aceptar los terminos y condiciones')          
         if (this.errores.length==0) {
-          let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)        
+          let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)    
+          console.log(respuesta)    
           if (respuesta.exito) {
             let res =await this.$store.dispatch("logeaUsuario",this.data)
             if (res.exito) {
               this.$router.push('/resumen-cuenta-inversionista')
             }          
-          } else {
-            if (respuesta.mensaje.startsWith("E11000 duplicate key error") ) this.errores.push(`Ya existe una cuenta con el correo ${this.data.email}`)
-          }
+          } 
         }
       } catch (error) {
+        
+        if (error.response.data.mensaje.startsWith("E11000 duplicate key error") ) this.errores.push(`Ya existe una cuenta con el correo ${this.data.email}`)
         console.log(error)
       }
 
@@ -132,6 +135,13 @@ export default {
 
 
 <style>
+
+.v-alert {
+  padding: 4px 8px;
+}
+.v-alert__icon {
+  margin-right: 20px;
+}
 
 .emptyInput {
   border:1px solid red;

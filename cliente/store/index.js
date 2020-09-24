@@ -54,9 +54,11 @@ export const mutations={
             prestamosFondeo:0
         }
     },
-    setCuenta(state,data){        
+    setCuenta(state,data){      
+        
         if (data.depositos) state.cuenta.depositos=data.depositos;
         if (data.enProceso) state.cuenta.enProceso=data.enProceso;
+        if (data.recompensasDoopla) state.cuenta.recompensasDoopla=data.recompensasDoopla;
 
     },    
     setToken(state,data) {
@@ -110,15 +112,19 @@ export const actions={
     async loadCuenta(vuexContext){
         let getDepositos=this.$axios.$get("/api/Totdepositos")
         let getEnProceso=this.$axios.$get("/api/TotInversiones")
-        const [depositosResp,enProcesoResp] =await Promise.all([
+        let getRecompensas=this.$axios.$get("/api/TotRecompensas")
+        const [depositosResp,enProcesoResp,recompensasResp] =await Promise.all([
             getDepositos,
-            getEnProceso
+            getEnProceso,
+            getRecompensas
         ])
         let data={};
         if (depositosResp.exito) 
             data.depositos=depositosResp.totDepositos;
         if (enProcesoResp.exito)
             data.enProceso=enProcesoResp.totInversiones
+        if (recompensasResp.exito)
+            data.recompensasDoopla=recompensasResp.totRecompensas
         
         vuexContext.commit('setCuenta',data)
         

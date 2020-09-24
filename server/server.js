@@ -28,11 +28,13 @@ const usrRoutes = require('./routes/auth')
 const depoRoutes=require('./routes/depositos')
 const solRoutes =require('./routes/solicitudes')
 const invRouters = require('./routes/inversiones')
+const recomRoutes=require('./routes/recompensas')
 
 app.use('/api',usrRoutes)
 app.use('/api',depoRoutes)
 app.use('/api',solRoutes)
 app.use('/api',invRouters)
+app.use('/api',recomRoutes)
 
 app.listen(3001,(err)=>{
     if (err){
