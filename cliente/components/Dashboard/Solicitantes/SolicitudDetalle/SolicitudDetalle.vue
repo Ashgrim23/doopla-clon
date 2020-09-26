@@ -22,7 +22,8 @@
                 <div>
                     <h2 class="tx-purp1">Generalidades de la solicitud</h2>
                 </div>
-                <div style="display:flex;justify-content:center;margin-top:25px;flex-wrap:wrap">
+                <div style="display:flex;justify-content:center;margin:25px 0;flex-wrap:wrap">
+                    <div style="display:flex;padding-right:25px;margin-bottom:25px;">
                     <ul style="color:rgb(111, 94, 158);">
                         <li><p>Plazo del crédito:</p></li>
                         <li><p>Préstamos en Doopla:</p></li>
@@ -43,22 +44,35 @@
                         <li><p>{{this.solicitud.scoreBuro}}</p></li>
                         <li><p>{{this.solicitud._id.substring(1, 10)}}</p></li>
                     </ul>
-                    <div>
-                        <p style="color:rgb(111, 94, 158);">Quiénes han prestado:</p>
+                    </div>
+                    <div >
+                        <p style="color:rgb(111, 94, 158);font-weight:900;margin-bottom:5px;">Quiénes han prestado:</p>
+                        <v-data-table                            
+                            style="color:rgb(87,70,123);width:250px;"
+                            no-data-text="No hay inversiones"
+                            :headers="headers"
+                            :items="inversiones"
+                            hide-default-footer
+                            disable-pagination
+                            fixed-header
+                            mobile-breakpoint="0"
+                            dense                               
+                            height="150"
+                            
+                        />
                     </div>
                 </div>
-                <div v-if="getEfectivo>250" style="display:flex;align-items:center;justify-content:center;margin-top:10px;">
+                <div v-if="getEfectivo>=250" style="display:flex;align-items:center;justify-content:center;margin-top:10;margin-bottom:20px;">
                     <select class="select" v-model="monto" >
                         <option v-for="(monto,key) in  montosInv" :value="monto" :key="key">${{monto}}</option>
                     </select>
                     <v-btn color="rgb(64, 249, 155)" class="invBtn" @click="onInvertir">invertir</v-btn>
-                </div>
-                
+                </div>                
             </v-col>
         </v-row>
         <v-row no-gutters v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown" style="justify-content:center; color:white;">
-            <v-col cols="6" style="padding-bottom:25px;">
-            <SolDtlCharts  :solicitud="this.solicitud" :percent="parseFloat(solicitud.statsFondeado.porcFondeado).toFixed(2)"/>
+            <v-col cols="6" style="padding-bottom:25px;margin-top:10px;">
+            <SolDtlCharts  :solicitud="this.solicitud" :percent="solicitud.statsFondeado.porcFondeado"/>
             </v-col>
         </v-row>
     </div>
@@ -75,7 +89,13 @@ export default {
         SolDtlCharts
     },
     data(){
-        return{            
+        return{       
+            headers:[
+                {text:"",sortable:false,value:"noreg"},
+                {text:"Alias",sortable:false,value:"alias",align:'start'},
+                {text:"Monto",sortable:false,value:"monto",align:'end'},
+            ], 
+            inversiones:[],
             show:false,
             isMounted:false,            
             monto:250
@@ -83,6 +103,7 @@ export default {
     },
     mounted(){
         this.isMounted=true
+        this.fetchInversiones()        
     },
     props:{
         solicitud:{type:Object,required:true}
@@ -101,6 +122,14 @@ export default {
         }
     },
     methods:{
+        async fetchInversiones(){
+            this.inversiones=[]
+            this.$axios.defaults.headers.common['x-access-token']=this.$store.state.token                   
+            let res = await this.$axios.$get(`/api/inversionesSolicitud/${this.solicitud._id}`)            
+            res.inversiones.forEach((inv,idx)=>{
+                this.inversiones.push({noreg:idx+1,alias:inv.usuario.nombre, monto:`$${inv.montoInversion}`})
+            })
+        },
         onInvertir(){
             const inversion={
                solicitud:this.solicitud,

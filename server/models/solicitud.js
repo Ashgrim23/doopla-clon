@@ -21,11 +21,13 @@ SolicitudSchema.virtual("statsFondeado").get(function(){
         porcFondeado:0,
         montoFondeado:0
     }
-    if (this.inversiones.length>0){
+
+    if (this.inversiones && this.inversiones.length>0){
         let sumMonto=0;
         this.inversiones.forEach(inversion => {
             sumMonto+=inversion.montoInversion;
         });
+        
         statsFondeado.montoFondeado=sumMonto;
         statsFondeado.porcFondeado=(sumMonto/this.monto)*100
         return statsFondeado;

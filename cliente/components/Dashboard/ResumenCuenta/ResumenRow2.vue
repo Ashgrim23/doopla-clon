@@ -81,22 +81,22 @@
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">Inversiones netas:</td>
-              <td style="text-align:right;">${{getCuenta.InversionesNetas}}</td>
+              <td style="text-align:right;color:red;">${{getCuenta.InversionesNetas}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">En proceso:</td>
-              <td style="text-align:right;">${{getCuenta.enProceso}}</td>
+              <td style="text-align:right;color:red;">${{getCuenta.enProceso}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">En tu canasta:</td>
-              <td style="text-align:right;">${{getCuenta.enCanasta}}</td>
+              <td style="text-align:right;color:red;">${{getCuenta.enCanasta}}</td>
             </tr>
             <tr>
               <td style="text-align:center">-</td>
               <td style="text-align:left;">Retiros:</td>
-              <td style="text-align:right;">${{getCuenta.retiros}}</td>
+              <td style="text-align:right;color:red;">${{getCuenta.retiros}}</td>
             </tr>
           </tbody>
           <tfoot class="DashPurpBgm">

@@ -19,11 +19,11 @@
                 </v-col>               
             </v-row>
             <v-row class="cartRow" >
-                <template v-if="this.$vuetify.breakpoint.smAndDown">
+                <template v-if="this.isMounted && this.$vuetify.breakpoint.smAndDown">
                         <SolicitudGrid :isCanasta="true" :onRemove="removeInversion"  v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion"/>
                         <EmptyCartRow v-if="getEnCanasta==0" />     
                 </template>   
-                <v-col v-if="this.$vuetify.breakpoint.mdAndUp">
+                <v-col v-if="this.isMounted && this.$vuetify.breakpoint.mdAndUp">
                     <CartRowHeader/>
                     <EmptyCartRow v-if="getEnCanasta==0" />     
                     <SolicitudList  :isCanasta="true" v-for="(inversion,key) in getCart" :key="key" :solicitud="inversion" :onRemove="removeInversion" />
@@ -121,6 +121,14 @@ import CartRowHeader from '@/components/Dashboard/Cart/CartRowHeader'
 import SolicitudGrid from '@/components/Dashboard/Solicitantes/SolicitudGrid'
 import SolicitudList from '@/components/Dashboard/Solicitantes/SolicitudList'
 export default {
+    mounted(){
+        this.isMounted=true
+    },
+    data(){
+        return {
+            isMounted:false
+        }
+    },
     components:{
         EmptyCartRow,
         CartRowHeader,

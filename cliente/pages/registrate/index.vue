@@ -113,8 +113,7 @@ export default {
         if (this.data.password_conf!=this.data.password) this.errores.push('La confirmacion de password y la password no son iguales')          
         if (!this.check) this.errores.push('Debe aceptar los terminos y condiciones')          
         if (this.errores.length==0) {
-          let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)    
-          console.log(respuesta)    
+          let respuesta = await this.$axios.$post("http://localhost:3001/api/registro",this.data)              
           if (respuesta.exito) {
             let res =await this.$store.dispatch("logeaUsuario",this.data)
             if (res.exito) {

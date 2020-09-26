@@ -43,7 +43,7 @@
                             <template v-slot:activator="{on,attrs}">
                                 <v-btn class="greenBtn invierteBtn" v-bind="attrs" v-on="on">ver detalle</v-btn>                            
                             </template>
-                            <SolicitudDetalle @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
+                            <SolicitudDetalle v-if='dlgDetalle' @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
                         </v-dialog>
                         
                         <v-dialog v-if="!this.isCanasta" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">

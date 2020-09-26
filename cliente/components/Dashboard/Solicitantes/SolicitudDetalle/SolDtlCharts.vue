@@ -13,7 +13,7 @@
             <div style="border-top:solid 1px white;border-left:solid 1px white;padding-top:5px;padding-left:5px;">
                 <PayProgreso  medida="50"  :percent="this.percent"/>
                 <p >Fondeado:</p>
-                <p ><strong>{{this.percent}}%</strong></p>
+                <p ><strong>{{parseFloat(this.percent).toFixed(2)}}%</strong></p>
             </div>
         </div>
         

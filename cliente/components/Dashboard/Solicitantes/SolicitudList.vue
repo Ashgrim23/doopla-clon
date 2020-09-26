@@ -35,17 +35,17 @@
                     <template v-slot:activator="{on,attrs}">
                         <v-btn class="greenBtn detailBtn" v-bind="attrs" v-on="on">ver detalle</v-btn>                            
                     </template>
-                    <SolicitudDetalle @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
+                    <SolicitudDetalle v-if='dlgDetalle' @close="dlgDetalle=false" :solicitud="solicitud" @invertido="onInvertido"/>
                 </v-dialog>
                 
-                <v-dialog v-if="!this.isCanasta" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
+                <v-dialog v-if="this.isMounted && !this.isCanasta" :fullscreen="$vuetify.breakpoint.xsOnly" max-width="500px"  v-model="dlgInverte"  transition="slide-y-transition">
                     <template v-slot:activator="{on,attrs}">                        
                         <v-btn class="purpleBtn invierteBtn" v-bind="attrs" v-on="on">invertir</v-btn>
                     </template>                            
                     <DialogInvierte  v-if="getEfectivo>=250" :solicitud="solicitud" :efectivo="getEfectivo"  @close="dlgInverte=false" @invertido="onInvertido"/>
                     <DialogInvierteError v-if="getEfectivo<250 && dlgInverte==true " @close="dlgInverte=false"/>
                 </v-dialog>
-                <v-dialog v-if="!this.isCanasta" max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly"  v-model="dlgListo"  transition="slide-y-transition">
+                <v-dialog v-if="this.isMounted && !this.isCanasta" max-width="500px" :fullscreen="$vuetify.breakpoint.xsOnly"  v-model="dlgListo"  transition="slide-y-transition">
                     <DialogInvierteListo @close="dlgListo=false"/>
                 </v-dialog>                
                 <v-icon v-if="this.isCanasta" color="rgb(87,70,123)" @click="onRemove(solicitud)">mdi-close-circle</v-icon>
@@ -72,8 +72,12 @@ export default {
         return {            
             dlgDetalle:false,
             dlgInverte:false,
-            dlgListo:false
+            dlgListo:false,
+            isMounted:false,
         }
+    },
+    mounted(){
+        this.isMounted=true;
     },
     methods:{
         onInvertido(){

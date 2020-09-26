@@ -5,6 +5,30 @@ const moment = require('moment')
 const Inversion = require('../models/inversion')
 const Solicitud =require('../models/solicitud')
 
+router.get('/TotInvNetas',verifyToken,async(req,res)=>{
+    try {
+        let inversiones=await Inversion.find({usuario:req.decoded._id}).populate('solicitud','fondeado').exec()
+        let invNetas=0;
+        let invProceso=0;
+        inversiones.forEach(inv=>{
+            inv.solicitud.fondeado ? invNetas+=inv.montoInversion : invProceso+=inv.montoInversion             
+        })
+        res.json({
+            exito:true,
+            totInversionesNetas:invNetas,
+            totInvesionesProceso:invProceso
+        })
+               
+        
+    } catch (error) {
+        res.status(500).json({
+            exito:false,
+            mensaje:error.message
+        })
+    }
+})
+
+
 router.get('/TotInversiones',verifyToken,async(req,res)=>{
     try {
         let inversiones=await Inversion.aggregate([
@@ -33,9 +57,9 @@ router.get('/TotInversiones',verifyToken,async(req,res)=>{
     }
 })
 
-router.get('/inversionesSolicitud',verifyToken,async(req,res) =>{
-    try {
-        const inversiones=await Inversion.find({solicitud:req.idSolicitud})
+router.get('/inversionesSolicitud/:id',verifyToken,async(req,res) =>{
+    try {        
+        const inversiones=await Inversion.find({solicitud:req.params.id}).populate('usuario','nombre').exec()        
         if (inversiones) {
             res.json({
                 exito:true,
@@ -62,7 +86,7 @@ router.post('/inversion',verifyToken,async(req,res)=>{
             newInv.solicitud=inversion._id
             newInv.fecha=moment()
             newInv.montoInversion=inversion.montoInversion;
-            addInversion(inversion._id,newInv._id)
+            addInversion(inversion._id,newInv)            
             arrPromesas.push(newInv.save())
         });        
         const savedInv=await Promise.all(arrPromesas)        
@@ -83,9 +107,20 @@ router.post('/inversion',verifyToken,async(req,res)=>{
     }
 })
 
-async function addInversion (solicitudId,inversionId){
-    let sol=await Solicitud.findById(solicitudId)    
-    await sol.update({$push:{inversiones:inversionId}})
+async function addInversion (solicitudId,newInv){
+    let sol=await Solicitud.findById(solicitudId).populate('inversiones','montoInversion')       
+    let fondeado= sol.statsFondeado.montoFondeado+newInv.montoInversion
+    
+    if (fondeado>= sol.monto){
+        sol.fondeado=true;
+        sol.inversiones.push(newInv._id)
+        await sol.save()
+    }
+        
+    else {
+        await sol.update({$push:{inversiones:newInv.solicitud._id}})
+    }
+    
 }
 
 module.exports=router;

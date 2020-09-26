@@ -59,11 +59,14 @@ export const mutations={
         if (data.depositos) state.cuenta.depositos=data.depositos;
         if (data.enProceso) state.cuenta.enProceso=data.enProceso;
         if (data.recompensasDoopla) state.cuenta.recompensasDoopla=data.recompensasDoopla;
-
+        if (data.InversionesNetas) state.cuenta.InversionesNetas=data.InversionesNetas;
     },    
     setToken(state,data) {
         state.token=data.token
         state.usuario=data.usuario
+    },
+    setCart(state,data){
+        state.cart=data.cart
     },
     clearToken(state) {
         state.token=null;
@@ -82,6 +85,7 @@ export const actions={
             let res= await this.$axios.$post('api/inversion',{inversiones:vuexContext.state.cart})                
             if (res.exito){
                     vuexContext.commit("clearCart")
+                    Cookie.remove('Cart')
                     vuexContext.dispatch("loadCuenta")
                 return true
             }
@@ -93,6 +97,7 @@ export const actions={
     },
     removeInversion(vuexContext,inversion){
         vuexContext.commit("removeInversion",inversion)
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 })
     },
     addInversionToCart(vuexContext,datos){        
         const cartSolicitud=vuexContext.state.cart.find(inversion => inversion._id===datos.solicitud._id )
@@ -102,6 +107,7 @@ export const actions={
             vuexContext.commit("incrementaMonto",{inversion:cartSolicitud,montoAdicional:datos.montoInversion})   
         }    
         vuexContext.commit("incEnCanasta");
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 })
 
     },
     async nuxtServerInit(vuexContext,context){        
@@ -111,18 +117,20 @@ export const actions={
     },
     async loadCuenta(vuexContext){
         let getDepositos=this.$axios.$get("/api/Totdepositos")
-        let getEnProceso=this.$axios.$get("/api/TotInversiones")
+        let getInversiones=this.$axios.$get("/api/TotInvNetas")
         let getRecompensas=this.$axios.$get("/api/TotRecompensas")
-        const [depositosResp,enProcesoResp,recompensasResp] =await Promise.all([
+        const [depositosResp,InversionesResp,recompensasResp] =await Promise.all([
             getDepositos,
-            getEnProceso,
+            getInversiones,
             getRecompensas
         ])
         let data={};
         if (depositosResp.exito) 
-            data.depositos=depositosResp.totDepositos;
-        if (enProcesoResp.exito)
-            data.enProceso=enProcesoResp.totInversiones
+            data.depositos=depositosResp.totDepositos;        
+        if (InversionesResp.exito){
+            data.enProceso=InversionesResp.totInvesionesProceso;
+            data.InversionesNetas=InversionesResp.totInversionesNetas;
+        }            
         if (recompensasResp.exito)
             data.recompensasDoopla=recompensasResp.totRecompensas
         
@@ -133,31 +141,47 @@ export const actions={
         let token;
         let usuario;
         let cookie;
+        let jsonCart;
+        let cart;
         process.client ? cookie=document.cookie : cookie=req.headers.cookie
         if (!cookie) {
             vuexContext.commit('clearToken')
+            vuexContext.commit('clearCart') 
+            vuexContext.commit('clearCuenta') 
             delete this.$axios.defaults.headers.common['x-access-token']
             return; 
         }  
         
         token=cookie.split(";").find(c=>c.trim().startsWith('jwt=')).split('=')[1]
         usuario=JSON.parse(unescape(cookie.split(";").find(c=>c.trim().startsWith('usuario=')).split('=')[1]))
+        jsonCart=cookie.split(";").find(c=>c.trim().startsWith('cart='))
+        if (jsonCart) {
+            cart=JSON.parse(unescape(jsonCart.split('=')[1]))
+        }
+        
 
         if (token && usuario) {
             vuexContext.commit('setToken',{ usuario:usuario, token:token})
-            this.$axios.defaults.headers.common['x-access-token']=token
+            this.$axios.defaults.headers.common['x-access-token']=token                
+            if (cart) {
+                vuexContext.commit('setCart',{cart:cart})
+                vuexContext.commit('incEnCanasta')
+            }
         } else {
             vuexContext.commit('clearToken')
+            vuexContext.commit('clearCart') 
+            vuexContext.commit('clearCuenta') 
             delete this.$axios.defaults.headers.common['x-access-token']
         }
-
     },
     deslogeaUsuario(vuexContext){
         vuexContext.commit("clearToken");
         Cookie.remove('jwt')
         Cookie.remove('usuario')
+        Cookie.remove('Cart')
         vuexContext.commit("clearCuenta");
         vuexContext.commit("clearCart");
+        
     },
     async logeaUsuario(vuexContext,data){
         try {
@@ -192,10 +216,10 @@ export const getters={
         return state.cuenta;
     },
     getEfectivo(state){
-        return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros                    
+        return state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla-state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros                    
     },
     getValorCnt(state){
-        let efectivo=state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla+state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros;
+        let efectivo=state.cuenta.depositos+state.cuenta.pagosAcreditados+state.cuenta.recompensasDoopla-state.cuenta.InversionesNetas-state.cuenta.enProceso-state.cuenta.enCanasta-state.cuenta.retiros;
         return efectivo+state.cuenta.enProceso+state.cuenta.prestamosActivos 
     }
 
