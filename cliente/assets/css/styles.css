@@ -27,6 +27,10 @@
   color: rgb(87,70,123) !important;
 }
 
+.greenBtn .v-btn__content {
+  color: rgb(87,70,123) !important;
+}
+
 .v-btn__content {
     font-family: "sans-serif" !important;
     color: rgb(255, 255, 255) !important;
