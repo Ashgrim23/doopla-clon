@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     onLogout(){         
-        console.log("click")
+        
          this.$store.dispatch("deslogeaUsuario")
          this.$router.push("/")
     },

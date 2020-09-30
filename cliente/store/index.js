@@ -84,8 +84,8 @@ export const actions={
         try {
             let res= await this.$axios.$post('api/inversion',{inversiones:vuexContext.state.cart})                
             if (res.exito){
-                    vuexContext.commit("clearCart")
-                    Cookie.remove('Cart')
+                    vuexContext.commit("clearCart")                    
+                    Cookie.remove('cart')
                     vuexContext.dispatch("loadCuenta")
                 return true
             }
@@ -97,7 +97,7 @@ export const actions={
     },
     removeInversion(vuexContext,inversion){
         vuexContext.commit("removeInversion",inversion)
-        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 })
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1,sameSite: 'strict'})
     },
     addInversionToCart(vuexContext,datos){        
         const cartSolicitud=vuexContext.state.cart.find(inversion => inversion._id===datos.solicitud._id )
@@ -107,7 +107,7 @@ export const actions={
             vuexContext.commit("incrementaMonto",{inversion:cartSolicitud,montoAdicional:datos.montoInversion})   
         }    
         vuexContext.commit("incEnCanasta");
-        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 })
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 ,sameSite:'strict'})
 
     },
     async nuxtServerInit(vuexContext,context){        
@@ -178,7 +178,7 @@ export const actions={
         vuexContext.commit("clearToken");
         Cookie.remove('jwt')
         Cookie.remove('usuario')
-        Cookie.remove('Cart')
+        Cookie.remove('cart')
         vuexContext.commit("clearCuenta");
         vuexContext.commit("clearCart");
         
@@ -187,8 +187,8 @@ export const actions={
         try {
             let respuesta=await this.$axios.$post("/api/login",data)            
             if (respuesta.exito){                
-                Cookie.set('jwt',respuesta.token,{ expires: 1 })
-                Cookie.set('usuario',respuesta.usuario,{ expires: 1 })
+                Cookie.set('jwt',respuesta.token,{ expires: 1 ,sameSite:'strict' })
+                Cookie.set('usuario',respuesta.usuario,{ expires: 1 ,sameSite:'strict' })
                 vuexContext.dispatch("checkCookies",vuexContext.req)  
                 vuexContext.dispatch('loadCuenta')               
                 return respuesta;
