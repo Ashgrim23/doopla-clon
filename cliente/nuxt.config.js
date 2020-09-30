@@ -1,4 +1,4 @@
-
+import TerserPlugin from 'terser-webpack-plugin'
 export default {  
   server: {
     port: 9001, // default: 3000
