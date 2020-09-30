@@ -16,6 +16,7 @@
     "vue-carousel-3d": "^0.2.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@nuxtjs/vuetify": "^1.11.2",
+    "terser-webpack-plugin": "^4.2.2"
   }
 }

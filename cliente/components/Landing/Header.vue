@@ -20,10 +20,10 @@
             <LeyendaForbes/>
           </div>
         </v-col>
-        <v-col cols="12" sm="2">
-          <v-btn class="purpleBtn">SOLICITA</v-btn>
+        <v-col cols="12" sm="2" style="text-align:center;">
+          <v-btn class="solPurpleBtn"  >SOLICITA</v-btn>
         </v-col>
-        <v-col cols="12" sm="2">
+        <v-col cols="12" sm="2" style="text-align:center;">
           <v-btn class="redBtn">INVIERTE</v-btn>
         </v-col>
       </v-row>

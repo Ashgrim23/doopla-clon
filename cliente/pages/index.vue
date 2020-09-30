@@ -80,7 +80,7 @@ export default {
 
 .floatBtn {
   background-color:rgb(64, 249, 155) !important;
-  border-radius: 13986px;
+  border-radius: 13986px !important;
   
 }
 

@@ -1,5 +1,6 @@
 <template>
   <v-col>
+    <no-ssr>
     <carousel-3d
       :perspective="0"
       :space="410"
@@ -11,6 +12,7 @@
         <PrestamosCard :prestamo="prestamo"/>
       </slide>
     </carousel-3d>
+    </no-ssr>
   </v-col>
 </template>
 

@@ -1,5 +1,9 @@
 
-export default {
+export default {  
+  server: {
+    port: 9001, // default: 3000
+    host: '0.0.0.0' // default: localhost
+  }, 
   /*
   ** Nuxt rendering mode
   ** See https://nuxtjs.org/api/configuration-mode
@@ -19,7 +23,8 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { name: 'keywords', content: 'ashgrim, ashgrim.net,doopla clone,doopla clon'},
+      { hid: 'description', name: 'description', content:'clon del sitio doopla.mx' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -60,12 +65,21 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:process.env.BASE_URL ||'http://localhost:3001' 
+    baseURL:process.env.BASE_URL ||'http://doopla.ashgrim.net' 
   },
   /*
   ** Build configuration
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: false
+        })
+      ]
+    }
   }
 }
