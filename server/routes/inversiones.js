@@ -118,7 +118,7 @@ async function addInversion (solicitudId,newInv){
     }
         
     else {
-        await sol.update({$push:{inversiones:newInv.solicitud._id}})
+        await sol.update({$push:{inversiones:newInv._id}})
     }
     
 }
