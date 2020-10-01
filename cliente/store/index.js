@@ -97,7 +97,7 @@ export const actions={
     },
     removeInversion(vuexContext,inversion){
         vuexContext.commit("removeInversion",inversion)
-        Cookie.set('cart',vuexContext.state.cart,{ expires: 1,sameSite: 'none',secure:true})
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1,sameSite: 'none'})
     },
     addInversionToCart(vuexContext,datos){        
         const cartSolicitud=vuexContext.state.cart.find(inversion => inversion._id===datos.solicitud._id )
@@ -107,7 +107,7 @@ export const actions={
             vuexContext.commit("incrementaMonto",{inversion:cartSolicitud,montoAdicional:datos.montoInversion})   
         }    
         vuexContext.commit("incEnCanasta");
-        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 ,sameSite:'none',secure:true})
+        Cookie.set('cart',vuexContext.state.cart,{ expires: 1 ,sameSite:'none'})
 
     },
     async nuxtServerInit(vuexContext,context){        
@@ -188,8 +188,8 @@ export const actions={
         try {
             let respuesta=await this.$axios.$post("/api/login",data)            
             if (respuesta.exito){                
-                Cookie.set('jwt',respuesta.token,{ expires: 1 ,sameSite:'none',secure:true })
-                Cookie.set('usuario',respuesta.usuario,{ expires: 1 ,sameSite:'none',secure:true })
+                Cookie.set('jwt',respuesta.token,{ expires: 1 ,sameSite:'none' })
+                Cookie.set('usuario',respuesta.usuario,{ expires: 1 ,sameSite:'none'})
                 vuexContext.dispatch("checkCookies",vuexContext.req)  
                 vuexContext.dispatch('loadCuenta')               
                 return respuesta;
