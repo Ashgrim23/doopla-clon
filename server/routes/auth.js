@@ -49,7 +49,8 @@ router.post('/registro',async(req,res)=>{
 
 router.post('/login',async(req,res)=>{
     try {
-        let usuario=await User.findOne({email:req.body.email})
+        
+        let usuario=await User.findOne({email:req.body.email})        
         if (usuario) {
             if (usuario.comparePassword(req.body.password)) {
                 let token=jwt.sign(usuario.toJSON(),process.env.SECRET,{

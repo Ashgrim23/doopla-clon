@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import SolDtlCharts from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolDtlCharts'
-import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg'
-import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso'
+import SolDtlCharts from '@/components/Dashboard/Solicitantes/SolicitudDetalle/SolDtlCharts.vue'
+import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg.vue'
+import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso.vue'
 export default {
     components:{
         CirculoGradRsg,

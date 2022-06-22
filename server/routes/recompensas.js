@@ -27,7 +27,7 @@ router.post('/recompensa',verifyToken,async(req,res)=>{
 })
 
 router.get('/TotRecompensas',verifyToken,async(req,res)=>{
-    try {
+     try {
         let recompensas=await Recompensa.aggregate([
             
             { $match:{usuario: new mongoose.Types.ObjectId(req.decoded._id)}},
@@ -39,8 +39,10 @@ router.get('/TotRecompensas',verifyToken,async(req,res)=>{
             }
         ])     
         let total=0;
-        
-        recompensas ? total=recompensas[0].total : total=0;
+        if (recompensas && recompensas.length>0) 
+           total=recompensas[0].total 
+	else
+	   total=0;
         
         res.json({
             exito:true,
@@ -48,7 +50,6 @@ router.get('/TotRecompensas',verifyToken,async(req,res)=>{
         })
         
     } catch (error) {
-        
         res.status(500).json({
             exito:false,
             mensaje:error.message

@@ -73,8 +73,8 @@ import SolicitudDetalle from '@/components/Dashboard/Solicitantes/SolicitudDetal
 import DialogInvierteListo from '@/components/Dashboard/Solicitantes/DialogInvierteListo.vue'
 import DialogInvierte from '@/components/Dashboard/Solicitantes/DialogInvierte.vue'
 import DialogInvierteError from '@/components/Dashboard/Solicitantes/DialogInvierteError.vue'
-import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg'
-import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso'
+import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg.vue'
+import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso.vue'
 export default {
     methods:{
         onInvertido(){
@@ -83,7 +83,8 @@ export default {
             this.dlgDetalle=false
         }
     },
-    componets:{
+    components:{
+        SolicitudDetalle,
         DialogInvierte,
         PayProgreso,
         CirculoGradRsg,

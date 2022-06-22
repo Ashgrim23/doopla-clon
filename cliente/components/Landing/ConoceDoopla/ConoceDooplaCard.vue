@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name:"ConoceDooplaCard",
     props:{
       imgURL: {
         type: String,

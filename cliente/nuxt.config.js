@@ -1,4 +1,6 @@
 import TerserPlugin from 'terser-webpack-plugin'
+const URL="http://localhost:3001"
+
 export default {  
   server: {
     port: 9001, // default: 3000
@@ -65,7 +67,12 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL:process.env.BASE_URL ||'http://doopla.ashgrim.net' 
+    proxy:true,
+    browserBaseURL: "http://localhost:3001",
+    baseURL:"http://doopla-backend:3001"
+  },
+  proxy: {
+    '/api':"http://doopla-backend:3001"
   },
   /*
   ** Build configuration

@@ -36,14 +36,14 @@
 </template>
 
 <script>
-import Header from "@/components/Landing/Header";
-import ConoceDoopla from "@/components/Landing/ConoceDoopla/ConoceDoopla";
-import BeneficiosDoopla from "@/components/Landing/BeneficiosDoopla/BeneficiosDoopla";
-import PrestamosCarrusel from "@/components/Landing/PrestamosCarrusel/PrestamosCarrusel";
-import Medios from "@/components/Landing/Medios/Medios";
-import Afiliados from "@/components/Landing/Afiliados/Afiliados";
-import LeyendaForbes from "@/components/Landing/LeyendaForbes";
-import Footer from "@/components/Landing/Footer/Footer";
+import Header from "@/components/Landing/Header.vue";
+import ConoceDoopla from "@/components/Landing/ConoceDoopla/ConoceDoopla.vue";
+import BeneficiosDoopla from "@/components/Landing/BeneficiosDoopla/BeneficiosDoopla.vue";
+import PrestamosCarrusel from "@/components/Landing/PrestamosCarrusel/PrestamosCarrusel.vue";
+import Medios from "@/components/Landing/Medios/Medios.vue";
+import Afiliados from "@/components/Landing/Afiliados/Afiliados.vue";
+import LeyendaForbes from "@/components/Landing/LeyendaForbes.vue";
+import Footer from "@/components/Landing/Footer/Footer.vue";
 export default {
     layout:"landingLayout",  
   components: {

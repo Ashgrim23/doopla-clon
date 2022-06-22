@@ -152,14 +152,15 @@ export const actions={
             delete this.$axios.defaults.headers.common['x-access-token']
             return; 
         }  
-        
-        token=cookie.split(";").find(c=>c.trim().startsWith('jwt=')).split('=')[1]
-        usuario=JSON.parse(unescape(cookie.split(";").find(c=>c.trim().startsWith('usuario=')).split('=')[1]))
-        jsonCart=cookie.split(";").find(c=>c.trim().startsWith('cart='))
-        if (jsonCart) {
-            cart=JSON.parse(unescape(jsonCart.split('=')[1]))
+        let jwtToken=cookie.split(";").find(c=>c.trim().startsWith('jwt='))
+        if (jwtToken){
+            token=jwtToken.split('=')[1]
+            usuario=JSON.parse(unescape(cookie.split(";").find(c=>c.trim().startsWith('usuario=')).split('=')[1]))
+            jsonCart=cookie.split(";").find(c=>c.trim().startsWith('cart='))
+            if (jsonCart) {
+                cart=JSON.parse(unescape(jsonCart.split('=')[1]))
+            }
         }
-        
 
         if (token && usuario) {
             vuexContext.commit('setToken',{ usuario:usuario, token:token})

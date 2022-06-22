@@ -21,10 +21,11 @@
 </template>
 
 <script>
-import ConoceDooplacard from '@/components/Landing/ConoceDoopla/ConoceDooplaCard'
+import ConoceDooplaCard from '@/components/Landing/ConoceDoopla/ConoceDooplaCard.vue'
 export default {
+  name:"ConoceDoopla",
   components:{
-    ConoceDooplacard
+    ConoceDooplaCard
   },
   data() {
     return {

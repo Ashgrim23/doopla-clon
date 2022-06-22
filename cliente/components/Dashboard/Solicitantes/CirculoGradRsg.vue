@@ -7,6 +7,7 @@
 
 <script>
 export default {
+    name:"CirculoGradRsg",
     props:{
         medida:{type:String,required:true},        
         gradoRiesgo:{type:String,required:true}

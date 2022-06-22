@@ -21,10 +21,16 @@
 </template>
 
 <script>
+import CirculoGradRsg from '@/components/Dashboard/Solicitantes/CirculoGradRsg.vue'
+import PayProgreso from '@/components/Dashboard/Solicitantes/PayProgreso.vue'
 export default {
     props:{
         solicitud:{type:Object,required:true},
         percent:{type:Number,required:true}
+    },
+    components:{
+        CirculoGradRsg,
+        PayProgreso
     }
     
 }
